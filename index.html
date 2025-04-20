@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FundMF App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Page Containers -->
+        <div id="homePage" class="page-container active">
+            <iframe src="home.html" class="iframe-container" title="Home Page"></iframe>
+        </div>
+        
+        <div id="portfolioPage" class="page-container">
+            <iframe src="portfolio.html" class="iframe-container" title="Portfolio Page"></iframe>
+        </div>
+        
+        <div id="investPage" class="page-container">
+            <iframe src="invest.html" class="iframe-container" title="Invest Page"></iframe>
+        </div>
+        
+        <div id="accountPage" class="page-container">
+            <iframe src="account.html" class="iframe-container" title="Account Page"></iframe>
+        </div>
+        
+        <div id="contactPage" class="page-container">
+            <iframe src="contact.html" class="iframe-container" title="Contact Us Page"></iframe>
+        </div>
+
+        <!-- Navigation Footer -->
+        <div class="nav-footer">
+            <div class="nav-item active" id="homeNav">
+                <div class="icon-circle">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div>Home</div>
+            </div>
+            <div class="nav-item" id="portfolioNav">
+                <div class="icon-circle">
+                    <i class="far fa-file-alt"></i>
+                </div>
+                <div>Portfolio</div>
+            </div>
+            <div class="nav-item" id="investNav">
+                <div class="icon-circle">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div>Invest</div>
+            </div>
+            <div class="nav-item" id="contactNav">
+                <div class="icon-circle">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div>Contact Us</div>
+            </div>
+            <div class="nav-item" id="accountNav">
+                <div class="icon-circle">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div>Account</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const pageIds = ['homePage', 'portfolioPage', 'investPage', 'accountPage', 'contactPage'];
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                navItems.forEach(nav => nav.classList.remove('active'));
+                pageIds.forEach(pageId => document.getElementById(pageId).classList.remove('active'));
+                
+                this.classList.add('active');
+                
+                const navId = this.id;
+                const pageId = navId.replace('Nav', 'Page');
+                document.getElementById(pageId).classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('iframe').forEach(iframe => {
+            iframe.onload = function() {
+                try {
+                    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+                    
+                    const style = iframeDocument.createElement('style');
+                    style.textContent = `
+                        ::-webkit-scrollbar {
+                            display: none;
+                        }
+                        body {
+                            -ms-overflow-style: none;
+                            scrollbar-width: none;
+                            max-width: 800px;
+                            margin: 0 auto;
+                        }
+                    `;
+                    
+                    iframeDocument.head.appendChild(style);
+                } catch (e) {
+                    console.log("Cannot access iframe content due to same-origin policy");
+                }
+            };
+        });
+    </script>
+</body>
+</html>

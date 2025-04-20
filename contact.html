@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - FundMF</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/contact.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Contact Form Section -->
+        <div class="contact-card">
+            <h2 class="text-center mb-2">Contact Us</h2>
+            <p class="text-center text-muted mb-4">Any question or remarks? Just write us a message!</p>
+            
+            <form id="contactForm">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="contactId" placeholder="Email">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="subject" placeholder="Subject">
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" id="message" rows="5" placeholder="Your Message"></textarea>
+                </div>
+                <div class="upload-btn" onclick="document.getElementById('fileUpload').click()">
+                    <span class="upload-icon">
+                        <i class="fas fa-upload text-success"></i>
+                    </span>
+                    Click to upload
+                    <input type="file" id="fileUpload" style="display: none;">
+                </div>
+                <button type="submit" class="send-btn">Send Request</button>
+            </form>
+        </div>
+        
+        <!-- Callback Request Section -->
+        <div class="callback-card">
+            <h2 class="mb-3">Request a Callback</h2>
+            <p class="mb-4">Fill in the form below to request a callback to discuss your move</p>
+            
+            <form id="callbackForm">
+                <div class="mb-3">
+                    <input type="tel" class="form-control rounded-pill" id="telephone" placeholder="Telephone Number*" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="submit-btn">SUBMIT</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Dealer Information Section -->
+        <div class="dealer-card">
+            <h2 class="text-center mb-4">Dealer Information</h2>
+            
+            <div class="text-center dealer-info">
+                <div class="mb-3">
+                    <i class="fas fa-id-card d-block"></i>
+                    <span>AMFI Reg. No: 61806</span>
+                </div>
+                <div class="mb-3">
+                    <i class="fas fa-user d-block"></i>
+                    <span>Name: Vinayak</span>
+                </div>
+                <div class="mb-3">
+                    <i class="fas fa-mobile-alt d-block"></i>
+                    <span>Mobile: 9058581168</span>
+                </div>
+                <div class="mb-3">
+                    <i class="fas fa-envelope d-block"></i>
+                    <span>Email: Aakashchauhan1414@gmail.com</span>
+                </div>
+                <div>
+                    <i class="fas fa-envelope d-block"></i>
+                    <span>FundMF Email: support@fundmf.com</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Form validation and submission handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const contactId = document.getElementById('contactId').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Validate form
+            if (!contactId || !subject || !message) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            // Form submission logic would go here
+            alert('Your message has been sent successfully!');
+            this.reset();
+        });
+        
+        document.getElementById('callbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const telephone = document.getElementById('telephone').value;
+            
+            // Validate phone number
+            if (!telephone || telephone.length < 10) {
+                alert('Please enter a valid phone number');
+                return;
+            }
+            
+            // Callback request logic would go here
+            alert('Callback request submitted. We will contact you soon!');
+            this.reset();
+        });
+        
+        // File upload handling
+        document.getElementById('fileUpload').addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                const fileName = e.target.files[0].name;
+                alert(`File "${fileName}" selected for upload`);
+            }
+        });
+    </script>
+</body>
+</html>
