@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recent Orders - FundMF</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+    
+    body {
+        background-color: #f8f9fa;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+    }
+    
+    .header {
+        background-color: #fff;
+        color: #333;
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+    
+    .date-filter {
+        background-color: #f1f1f1;
+        padding: 12px;
+        border-radius: 5px;
+        margin: 0 10px 15px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .date-label {
+        font-size: 12px;
+        background-color: #6B8E23;
+        color: white;
+        border-radius: 12px;
+        padding: 3px 10px;
+        margin-right: 10px;
+    }
+    
+    .date-range {
+        display: flex;
+        justify-content: space-between;
+        flex-grow: 1;
+        font-size: 14px;
+    }
+    
+    .date-from, .date-to {
+        display: flex;
+        align-items: center;
+    }
+    
+    .status-filter {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 15px 15px 15px;
+        font-size: 15px;
+        font-weight: bold;
+    }
+    
+    .payment-filter {
+        color: #6B8E23;
+        display: flex;
+        align-items: center;
+    }
+    
+    .payment-icon {
+        margin-right: 5px;
+        font-size: 16px;
+    }
+    
+    .order-item {
+        background-color: white;
+        border-radius: 5px;
+        margin: 0 10px 10px 10px;
+        padding: 12px;
+        border: 1px solid #eee;
+    }
+    
+    .order-fund {
+        font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+    
+    .order-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 5px;
+    }
+    
+    .order-amount {
+        color: #666;
+    }
+    
+    .order-status {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+    
+    .status-buy {
+        background-color: #6B8E23;
+        color: white;
+        border-radius: 15px;
+        padding: 3px 12px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .status-sell {
+        background-color: #ff6b6b;
+        color: white;
+        border-radius: 15px;
+        padding: 3px 12px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .status-processing {
+        background-color: #e9ecef;
+        color: #333;
+        border-radius: 15px;
+        padding: 3px 12px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .status-completed {
+        background-color: #c8e6c9;
+        color: #333;
+        border-radius: 15px;
+        padding: 3px 12px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .time-filters {
+        display: flex;
+        justify-content: space-around;
+        padding: 15px 10px;
+        border-top: 1px solid #ddd;
+        margin-top: 10px;
+    }
+    
+    .time-filter-btn {
+        background: none;
+        border: none;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        padding: 5px 15px;
+    }
+    
+    .time-filter-btn.active {
+        border-bottom: 2px solid #6B8E23;
+        color: #6B8E23;
+    }
+</style>
+</head>
+<body>
+
+
+
+<!-- Header -->
+<div class="header">
+    Recent Orders
+</div>
+
+<!-- Date Filter -->
+<div class="date-filter">
+    <div class="date-label">Date Range</div>
+    <div class="date-range">
+        <div class="date-from">From: 21st Apr 2025</div>
+        <div class="date-to">To: 21st Apr 2025</div>
+    </div>
+</div>
+
+<!-- Status Filter -->
+<div class="status-filter">
+    <div>Pending orders (6)</div>
+    <div class="payment-filter">
+        <i class="fas fa-wallet payment-icon"></i>
+        Payment
+    </div>
+</div>
+
+<!-- Order Items -->
+<div class="order-item">
+    <div class="order-fund">Kotak Energy Opportunities Fund</div>
+    <div class="order-bottom">
+        <div class="order-amount">₹2,500</div>
+        <div class="order-status">
+            <span class="status-buy">Buy</span>
+            <span class="status-processing">Processing</span>
+        </div>
+    </div>
+</div>
+
+<div class="order-item">
+    <div class="order-fund">Quant Small Cap Fund</div>
+    <div class="order-bottom">
+        <div class="order-amount">₹2,500</div>
+        <div class="order-status">
+            <span class="status-sell">Sell</span>
+            <span class="status-completed">Order Completed</span>
+        </div>
+    </div>
+</div>
+
+<div class="order-item">
+    <div class="order-fund">Quant Small Cap Fund</div>
+    <div class="order-bottom">
+        <div class="order-amount">₹2,500</div>
+        <div class="order-status">
+            <span class="status-buy">Buy</span>
+            <span class="status-completed">Order Completed</span>
+        </div>
+    </div>
+</div>
+
+<div class="order-item">
+    <div class="order-fund">ICICI Prudential Nifty 50 Index Fund</div>
+    <div class="order-bottom">
+        <div class="order-amount">₹2,500</div>
+        <div class="order-status">
+            <span class="status-buy">Buy</span>
+            <span class="status-processing">Processing</span>
+        </div>
+    </div>
+</div>
+
+<div class="order-item">
+    <div class="order-fund">HDFC Mid-Cap Opportunities Fund</div>
+    <div class="order-bottom">
+        <div class="order-amount">₹2,500</div>
+        <div class="order-status">
+            <span class="status-buy">Buy</span>
+            <span class="status-completed">Order Completed</span>
+        </div>
+    </div>
+</div>
+
+<div class="order-item">
+    <div class="order-fund">HDFC Mid-Cap Opportunities Fund</div>
+    <div class="order-bottom">
+        <div class="order-amount">₹2,500</div>
+        <div class="order-status">
+            <span class="status-buy">Buy</span>
+            <span class="status-processing">Processing</span>
+        </div>
+    </div>
+</div>
+
+<div class="order-item">
+    <div class="order-fund">HDFC Mid-Cap Opportunities Fund</div>
+    <div class="order-bottom">
+        <div class="order-amount">₹2,500</div>
+        <div class="order-status">
+            <span class="status-buy">Buy</span>
+            <span class="status-completed">Order Completed</span>
+        </div>
+    </div>
+</div>
+
+<!-- Time Filters -->
+<div class="time-filters">
+    <button class="time-filter-btn">7 days</button>
+    <button class="time-filter-btn">30 days</button>
+    <button class="time-filter-btn active">This Month</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Time filter functionality
+    const timeFilterBtns = document.querySelectorAll('.time-filter-btn');
+    
+    timeFilterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            timeFilterBtns.forEach(b => b.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>

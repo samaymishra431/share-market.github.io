@@ -3,110 +3,325 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FundMF App</title>
+    <title>FundMF - Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/index.css">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            padding: 20px;
+            background-color: white;
+            min-height: 100vh;
+            padding-top: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .heading {
+            text-align: center;
+            margin-bottom: 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .subheading {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .form-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .login-form {
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #62880a;
+        }
+        
+        .password-wrapper {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            cursor: pointer;
+        }
+        
+        .login-btn {
+            background-color: #62880a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 15px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .login-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin: 10px 0 20px;
+        }
+        
+        .forgot-password a {
+            color: #62880a;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background-color: #e0e0e0;
+        }
+        
+        .divider-text {
+            padding: 0 10px;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .register-prompt {
+            text-align: center;
+            margin-top: auto;
+            padding-top: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .register-link {
+            color: #62880a;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div class="main-container">
-        <!-- Page Containers -->
-        <div id="homePage" class="page-container active">
-            <iframe src="home.html" class="iframe-container" title="Home Page"></iframe>
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo">
+            <img src="./assets/images/logo.jpeg" alt="Fund MF Logo">
         </div>
         
-        <div id="portfolioPage" class="page-container">
-            <iframe src="portfolio.html" class="iframe-container" title="Portfolio Page"></iframe>
+        <!-- Heading -->
+        <h1 class="heading">Welcome Back</h1>
+        <p class="subheading">Login to Your Trading Account</p>
+        
+        <!-- Form Container -->
+        <div class="form-container">
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">User ID / Email / Mobile</label>
+                    <input type="text" class="form-control" name="userId" id="userId" required value="aniket@gmail.com">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" class="form-control" name="password" id="password" required value="12345678">
+                        <span class="toggle-password" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="forgot-password">
+                    <a href="forgotPassword.html">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">Login</button>
+            </form>
+            
+            <div class="divider">
+                <div class="divider-line"></div>
+                <div class="divider-text">OR</div>
+                <div class="divider-line"></div>
+            </div>
+            
+            <button type="button" class="login-btn" style="background-color: #f5f5f5; color: #333; border: 1px solid #ddd;">
+                <i class="fas fa-mobile-alt" style="margin-right: 8px;"></i> Login with OTP
+            </button>
+            
+            <div class="register-prompt">
+                Don't have an account? <a href="onboarding.html" class="register-link">Register Now</a>
+            </div>
         </div>
         
-        <div id="investPage" class="page-container">
-            <iframe src="invest.html" class="iframe-container" title="Invest Page"></iframe>
-        </div>
-        
-        <div id="accountPage" class="page-container">
-            <iframe src="account.html" class="iframe-container" title="Account Page"></iframe>
-        </div>
-        
-        <div id="contactPage" class="page-container">
-            <iframe src="contact.html" class="iframe-container" title="Contact Us Page"></iframe>
-        </div>
-
-        <!-- Navigation Footer -->
-        <div class="nav-footer">
-            <div class="nav-item active" id="homeNav">
-                <div class="icon-circle">
-                    <i class="fas fa-home"></i>
-                </div>
-                <div>Home</div>
-            </div>
-            <div class="nav-item" id="portfolioNav">
-                <div class="icon-circle">
-                    <i class="far fa-file-alt"></i>
-                </div>
-                <div>Portfolio</div>
-            </div>
-            <div class="nav-item" id="investNav">
-                <div class="icon-circle">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <div>Invest</div>
-            </div>
-            <div class="nav-item" id="contactNav">
-                <div class="icon-circle">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <div>Contact Us</div>
-            </div>
-            <div class="nav-item" id="accountNav">
-                <div class="icon-circle">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div>Account</div>
-            </div>
+        <div class="footer">
+            <p class="footer-text">By logging in, you agree to our Terms & Conditions and Privacy Policy</p>
+            <p class="footer-text">© 2025 FundMF. All rights reserved.</p>
         </div>
     </div>
 
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.all.min.js"></script>
+    
     <script>
-        const pageIds = ['homePage', 'portfolioPage', 'investPage', 'accountPage', 'contactPage'];
-        const navItems = document.querySelectorAll('.nav-item');
-        
-        navItems.forEach(item => {
-            item.addEventListener('click', function() {
-                navItems.forEach(nav => nav.classList.remove('active'));
-                pageIds.forEach(pageId => document.getElementById(pageId).classList.remove('active'));
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const userId = document.getElementById('userId');
+            const password = document.getElementById('password');
+            const togglePassword = document.getElementById('togglePassword');
+            const loginBtn = document.getElementById('loginBtn');
+            
+            // Toggle password visibility
+            togglePassword.addEventListener('click', function() {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
                 
-                this.classList.add('active');
-                
-                const navId = this.id;
-                const pageId = navId.replace('Nav', 'Page');
-                document.getElementById(pageId).classList.add('active');
+                // Toggle eye icon
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
             });
-        });
-
-        document.querySelectorAll('iframe').forEach(iframe => {
-            iframe.onload = function() {
-                try {
-                    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-                    
-                    const style = iframeDocument.createElement('style');
-                    style.textContent = `
-                        ::-webkit-scrollbar {
-                            display: none;
-                        }
-                        body {
-                            -ms-overflow-style: none;
-                            scrollbar-width: none;
-                            max-width: 800px;
-                            margin: 0 auto;
-                        }
-                    `;
-                    
-                    iframeDocument.head.appendChild(style);
-                } catch (e) {
-                    console.log("Cannot access iframe content due to same-origin policy");
+            
+            // Form validation
+            function validateForm() {
+                let isValid = true;
+                
+                if (!userId.value.trim()) {
+                    userId.style.borderColor = '#ff6b6b';
+                    isValid = false;
+                } else {
+                    userId.style.borderColor = '#ddd';
                 }
-            };
+                
+                if (!password.value.trim()) {
+                    password.style.borderColor = '#ff6b6b';
+                    isValid = false;
+                } else {
+                    password.style.borderColor = '#ddd';
+                }
+                
+                return isValid;
+            }
+            
+            // Input validation styling
+            [userId, password].forEach(input => {
+                input.addEventListener('input', function() {
+                    if (!this.value.trim()) {
+                        this.style.borderColor = '#ff6b6b';
+                    } else {
+                        this.style.borderColor = '#ddd';
+                    }
+                });
+            });
+            
+            // Form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (validateForm()) {
+                    // Here you would typically send the login credentials to your server
+                    console.log('Login attempted with:', {
+                        userId: userId.value,
+                        password: password.value
+                    });
+                    
+                    // Show SweetAlert2 success message
+                    Swal.fire({
+                        title: 'Login Successful!',
+                        text: 'Welcome to your trading account',
+                        icon: 'success',
+                        confirmButtonText: 'Continue to Dashboard',
+                        confirmButtonColor: '#62880a',
+                        timer: 2000,
+                        timerProgressBar: true
+                    }).then((result) => {
+                        // Redirect to dashboard after the alert
+                        window.location.href = 'dashboard.html';
+                    });
+                } else {
+                    // Optional: Show error message with SweetAlert if validation fails
+                    Swal.fire({
+                        title: 'Login Failed',
+                        text: 'Please fill in all required fields',
+                        icon: 'error',
+                        confirmButtonText: 'Try Again',
+                        confirmButtonColor: '#62880a'
+                    });
+                }
+            });
         });
     </script>
 </body>

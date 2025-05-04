@@ -1,94 +1,760 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - FundMF</title>
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/home.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home - FundMF</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+    
+    body {
+        background-color: #f8f9fa;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+    }
+    
+    .status-bar {
+        background-color: #4d6a11;
+        color: white;
+        padding: 5px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        height: 25px;
+    }
+    
+    .status-bar-right {
+        display: flex;
+        align-items: center;
+    }
+    
+    .status-bar-icon {
+        margin-left: 5px;
+    }
+    
+    .header {
+        background-color: #4d6a11;
+        color: white;
+        padding: 15px 20px 25px 20px;
+    }
+    
+    .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    .menu-icon {
+        font-size: 28px;
+        color: white;
+        cursor: pointer;
+    }
+    
+    .notification {
+        position: relative;
+    }
+    
+    .notification i {
+        font-size: 24px;
+        color: white;
+    }
+    
+    .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .user-greeting {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+    
+    .welcome-text {
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+    }
+    
+    .investment-card {
+        background-color: white;
+        border-radius: 15px 15px 0 0;
+        margin-top: -15px;
+        padding: 20px;
+        box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .investment-label {
+        color: #999;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+    
+    .investment-amount {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #333;
+    }
+    
+    .investment-current {
+        color: #999;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+    
+    .current-amount {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        color: #333;
+    }
+    
+    .performance-indicator {
+        color: #2e8b57;
+        font-size: 16px;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .performance-positive {
+        color: #2e8b57;
+    }
+    
+    .performance-row {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+        border-top: 1px dashed #e0e0e0;
+        padding-top: 10px;
+    }
+    
+    .gain-loss-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+    }
+    
+    .gain-icon {
+        color: #2e8b57;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+    
+    .loss-icon {
+        color: #ff6b6b;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+    
+    .gain-amount {
+        color: #2e8b57;
+        font-weight: bold;
+    }
+    
+    .loss-amount {
+        color: #ff6b6b;
+        font-weight: bold;
+    }
+    
+    .section-title {
+        padding: 15px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        padding: 0 15px;
+    }
+    
+    .service-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .service-icon-box {
+        background-color: #a5c765;
+        border-radius: 10px;
+        width: 65px;
+        height: 65px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 5px;
+    }
+    
+    .service-icon {
+        font-size: 24px;
+    }
+    
+    .service-label {
+        font-size: 14px;
+    }
+    
+    .new-fund-card {
+        background-color: white;
+        border-radius: 10px;
+        margin: 15px;
+        padding: 15px;
+        box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .fund-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    .fund-category {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    
+    .fund-details {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+    
+    .fund-detail-item {
+        font-size: 14px;
+    }
+    
+    .detail-value {
+        font-weight: bold;
+    }
+    
+    .apply-button {
+        background-color: #a5c765;
+        color: #333;
+        border: none;
+        border-radius: 25px;
+        padding: 10px;
+        font-weight: bold;
+        width: 100%;
+        cursor: pointer;
+    }
+    
+    /* Sidebar styles */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 70%;
+        height: 100%;
+        background-color: white;
+        z-index: 1000;
+        padding-top: 20px;
+        display: none;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+    
+    .sidebar-header {
+        display: flex;
+        align-items: center;
+        padding: 0 15px 15px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .sidebar-logo {
+        height: 40px;
+        margin-right: 10px;
+    }
+    
+    .sidebar-menu {
+        display: flex;
+        justify-content: flex-end;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    
+    .sidebar-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 5px 15px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    
+    .sidebar-item.active {
+        background-color: #f0f0f0;
+    }
+    
+    .sidebar-icon {
+        margin-right: 15px;
+        color: #666;
+        width: 20px;
+        text-align: center;
+    }
+    
+    .sidebar-text {
+        color: #666;
+    }
+    
+    .show-sidebar {
+        display: block;
+    }
+    
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+    }
+    
+    /* Modal styles */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1001;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .modal-content {
+        background-color: white;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 350px;
+        padding: 20px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .modal-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    
+    .modal-message {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 20px;
+    }
+    
+    .modal-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+    
+    .modal-cancel {
+        background-color: #eee;
+        color: #333;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    
+    .modal-confirm {
+        background-color: #4d6a11;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- Welcome Section -->
-        <div class="welcome-card">
-            <h2>Welcome, Vinayak</h2>
-            <p>Your financial journey is on track. Let's see how your investments are doing today.</p>
-            <button class="action-btn">Explore Investments</button>
-        </div>
-        
-        <!-- Stats Section -->
-        <div class="stats-card">
-            <div class="row">
-                <div class="col-6 text-center mb-3">
-                    <div class="stat-value">₹23,456</div>
-                    <div class="stat-label">Current Value</div>
-                </div>
-                <div class="col-6 text-center mb-3">
-                    <div class="stat-value">₹20,000</div>
-                    <div class="stat-label">Invested Amount</div>
-                </div>
-                <div class="col-6 text-center">
-                    <div class="stat-value">17.28%</div>
-                    <div class="stat-label">Total Returns</div>
-                </div>
-                <div class="col-6 text-center">
-                    <div class="stat-value">₹3,456</div>
-                    <div class="stat-label">Profit/Loss</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Features Section -->
-        <h3 class="section-title">Quick Actions</h3>
-        <div class="row">
-            <div class="col-12">
-                <div class="feature-card d-flex align-items-center">
-                    <div class="feature-icon">
-                        <i class="fas fa-plus"></i>
-                    </div>
-                    <div>
-                        <h5 class="mb-0">Start a SIP</h5>
-                        <small>Begin systematic investment plans</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="feature-card d-flex align-items-center">
-                    <div class="feature-icon">
-                        <i class="fas fa-exchange-alt"></i>
-                    </div>
-                    <div>
-                        <h5 class="mb-0">One-Time Investment</h5>
-                        <small>Invest a lump sum amount</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="feature-card d-flex align-items-center">
-                    <div class="feature-icon">
-                        <i class="fas fa-wallet"></i>
-                    </div>
-                    <div>
-                        <h5 class="mb-0">Add Funds</h5>
-                        <small>Add money to your account</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Market News Section -->
-        <h3 class="section-title mt-4">Market Updates</h3>
-        <div class="news-card">
-            <h5>Sensex closes at all-time high</h5>
-            <p class="text-muted small">Yesterday, 4:30 PM</p>
-            <p>The BSE Sensex closed at an all-time high of 63,583.07 points, gaining 1.2% on positive economic data...</p>
-        </div>
-        <div class="news-card">
-            <h5>Top performing mutual funds this month</h5>
-            <p class="text-muted small">2 days ago</p>
-            <p>Equity-based mutual funds have shown strong performance with average returns of 8.5% over the last month...</p>
+
+<!-- Overlay for sidebar background -->
+<div class="overlay"></div>
+
+<!-- Confirmation Modal -->
+<div class="modal" id="logoutModal">
+    <div class="modal-content">
+        <div class="modal-title">Confirm Logout</div>
+        <div class="modal-message">Are you sure you want to logout from your FundMF account?</div>
+        <div class="modal-buttons">
+            <button class="modal-cancel">Cancel</button>
+            <button class="modal-confirm">Logout</button>
         </div>
     </div>
+</div>
+
+<!-- Sidebar/Navigation Menu -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <img src="/assets/images/logo.jpeg" alt="FundMF Logo" class="sidebar-logo">
+        <div style="font-weight: bold; font-size: 18px;">FundMF</div>
+        <div style="flex-grow: 1;"></div>
+        <div class="sidebar-menu">
+            <i class="fas fa-times"></i>
+        </div>
+    </div>
+    
+    <div class="sidebar-item active" data-page="homePage">
+        <i class="fas fa-home sidebar-icon"></i>
+        <div class="sidebar-text">Dashboard</div>
+    </div>
+    
+    <div class="sidebar-item" data-page="portfolioPage">
+        <i class="fas fa-briefcase sidebar-icon"></i>
+        <div class="sidebar-text">Portfolio</div>
+    </div>
+    
+    <div class="sidebar-item" data-page="recentOrders">
+        <i class="fas fa-clipboard-list sidebar-icon"></i>
+        <div class="sidebar-text">Recent Orders</div>
+    </div>
+    
+        <div class="sidebar-item" data-page="mandatePage">
+            <i class="fas fa-file-signature sidebar-icon"></i>
+            <div class="sidebar-text">Mandate</div>
+        </div>
+        
+        <div class="sidebar-item" data-page="accountTransaction">
+            <i class="fas fa-exchange-alt sidebar-icon"></i>
+            <div class="sidebar-text">Transact</div>
+        </div>
+        
+        <div class="sidebar-item" data-page="investPage">
+            <i class="fas fa-chart-line sidebar-icon"></i>
+            <div class="sidebar-text">Invest</div>
+        </div>
+    
+    <div class="sidebar-item" data-page="accountPage">
+        <i class="fas fa-cog sidebar-icon"></i>
+        <div class="sidebar-text">Settings</div>
+    </div>
+    
+    <div class="sidebar-item" data-page="contactPage">
+        <i class="fas fa-headset sidebar-icon"></i>
+        <div class="sidebar-text">Contact Us</div>
+    </div>
+    
+    <div class="sidebar-item" id="logoutItem">
+        <i class="fas fa-sign-out-alt sidebar-icon"></i>
+        <div class="sidebar-text">Logout</div>
+    </div>
+</div>
+
+<!-- Main Header -->
+<div class="header">
+    <div class="header-top">
+        <div class="menu-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="notification">
+            <i class="fas fa-bell"></i>
+            <div class="notification-badge">2</div>
+        </div>
+    </div>
+    <div class="user-greeting">Hi John Doe · William</div>
+    <div class="welcome-text">Welcome to FundMF</div>
+</div>
+    
+<!-- Investment Card -->
+<div class="investment-card">
+    <div class="investment-label">Invested</div>
+    <div class="investment-amount">₹1,00,000</div>
+    <div class="investment-current">Current</div>
+    <div class="current-amount">
+        ₹1,02,750
+        <div class="performance-indicator">
+            2.75% <i class="fas fa-circle-check" style="color: #2e8b57; margin-left: 5px;"></i>
+        </div>
+    </div>
+    <div class="performance-row">
+        <div class="gain-loss-column" style="border-right: 1px solid #e0e0e0;">
+            <div class="gain-icon">
+                <i class="fas fa-caret-up"></i>
+            </div>
+            <div class="gain-amount">₹2,750</div>
+            <div>Gain</div>
+        </div>
+        <div class="gain-loss-column">
+            <div class="loss-icon">
+                <i class="fas fa-caret-down"></i>
+            </div>
+            <div class="loss-amount">₹0</div>
+            <div>Loss</div>
+        </div>
+    </div>
+</div>
+
+<!-- Services Section -->
+<div class="section-title">Our Services</div>
+<div class="services-grid">
+    <div class="service-item" data-page="accountTransaction" data-service="purchase">
+        <div class="service-icon-box">
+            <i class="fas fa-handshake service-icon"></i>
+        </div>
+        <div class="service-label">Purchase</div>
+    </div>
+    <div class="service-item" data-page="createSip" data-service="sip">
+        <div class="service-icon-box">
+            <i class="fas fa-chart-bar service-icon"></i>
+        </div>
+        <div class="service-label">SIP</div>
+    </div>
+    <div class="service-item" data-page="mandatePage" data-service="stp">
+        <div class="service-icon-box">
+            <i class="fas fa-file-alt service-icon"></i>
+        </div>
+        <div class="service-label">STP</div>
+    </div>
+    <div class="service-item" data-page="accountTransaction" data-service="swp">
+        <div class="service-icon-box">
+            <i class="fas fa-coins service-icon"></i>
+        </div>
+        <div class="service-label">SWP</div>
+    </div>
+    <div class="service-item" data-page="nfo" data-service="nfo">
+        <div class="service-icon-box">
+            <i class="fas fa-rocket service-icon"></i>
+        </div>
+        <div class="service-label">NFO</div>
+    </div>
+    <div class="service-item" data-page="portfolioPage" data-service="redeem">
+        <div class="service-icon-box">
+            <i class="fas fa-wallet service-icon"></i>
+        </div>
+        <div class="service-label">Redeem</div>
+    </div>
+</div>
+
+<!-- New Fund Offering -->
+<div class="section-title">New Fund Offering</div>
+<div class="new-fund-card">
+    <div class="fund-title">Kotak Energy Opportunities Fund</div>
+    <div class="fund-category">Direct | Growth | Equity - Sectoral/Thematic</div>
+    <div class="fund-details">
+        <div class="fund-detail-item">
+            <div>Offer close</div>
+            <div class="detail-value">17th Apr 2025</div>
+        </div>
+        <div class="fund-detail-item">
+            <div>Min. investment</div>
+            <div class="detail-value">₹1,000</div>
+        </div>
+    </div>
+    <button class="apply-button">Apply</button>
+</div>
+
+<script>
+   // Sidebar functionality
+const menuIcon = document.querySelector('.menu-icon');
+const sidebar = document.querySelector('.sidebar');
+const sidebarClose = document.querySelector('.sidebar-menu');
+const overlay = document.querySelector('.overlay');
+const logoutItem = document.getElementById('logoutItem');
+const logoutModal = document.getElementById('logoutModal');
+const modalCancel = document.querySelector('.modal-cancel');
+const modalConfirm = document.querySelector('.modal-confirm');
+
+// Open sidebar
+menuIcon.addEventListener('click', function() {
+    sidebar.classList.add('show-sidebar');
+    overlay.style.display = 'block';
+});
+
+// Close sidebar
+sidebarClose.addEventListener('click', function() {
+    sidebar.classList.remove('show-sidebar');
+    overlay.style.display = 'none';
+});
+
+// Close sidebar when clicking outside
+overlay.addEventListener('click', function() {
+    sidebar.classList.remove('show-sidebar');
+    overlay.style.display = 'none';
+});
+
+// Show logout confirmation modal
+logoutItem.addEventListener('click', function() {
+    sidebar.classList.remove('show-sidebar');
+    overlay.style.display = 'none';
+    logoutModal.style.display = 'flex';
+});
+
+// Cancel logout
+modalCancel.addEventListener('click', function() {
+    logoutModal.style.display = 'none';
+});
+
+// Confirm logout and redirect
+modalConfirm.addEventListener('click', function() {
+    window.top.location.href = 'loginPage.html';
+});
+
+// Close modal when clicking outside
+logoutModal.addEventListener('click', function(event) {
+    if (event.target === logoutModal) {
+        logoutModal.style.display = 'none';
+    }
+});
+
+// Update the sidebar item click handler
+document.querySelectorAll('.sidebar-item').forEach(item => {
+    if (item.id !== 'logoutItem') {
+        item.addEventListener('click', function() {
+            // Remove active class from all items
+            document.querySelectorAll('.sidebar-item').forEach(sideItem => {
+                sideItem.classList.remove('active');
+            });
+            
+            // Add active class to clicked item
+            this.classList.add('active');
+            
+            // Get the page ID from data attribute
+            const pageId = this.getAttribute('data-page');
+            
+            // Only proceed if we have a valid page ID
+            if (pageId) {
+                // Close sidebar
+                sidebar.classList.remove('show-sidebar');
+                overlay.style.display = 'none';
+                
+                // Send message to parent window to change page
+                if (window.parent && window.parent.postMessage) {
+                    window.parent.postMessage({
+                        action: 'changePage',
+                        pageId: pageId
+                    }, '*');
+                }
+                
+                // Show a loader inside the iframe while the parent changes the page
+                showInFrameLoader();
+            } else {
+                // For other items without page ID
+                sidebar.classList.remove('show-sidebar');
+                overlay.style.display = 'none';
+            }
+        });
+    }
+});
+
+// Add click event listeners for service items
+document.querySelectorAll('.service-item').forEach(item => {
+    item.addEventListener('click', function() {
+        // Get the page ID and service type from data attributes
+        const pageId = this.getAttribute('data-page');
+        const serviceType = this.getAttribute('data-service');
+        
+        // Only proceed if we have a valid page ID
+        if (pageId) {
+            // Send message to parent window to change page
+            if (window.parent && window.parent.postMessage) {
+                window.parent.postMessage({
+                    action: 'changePage',
+                    pageId: pageId,
+                    serviceType: serviceType // Pass the service type to the parent
+                }, '*');
+            }
+            
+            // Show a loader inside the iframe
+            showInFrameLoader();
+        }
+    });
+});
+
+// Make NFO card button clickable
+document.querySelector('.apply-button').addEventListener('click', function() {
+    // Send message to parent window to navigate to NFO page
+    if (window.parent && window.parent.postMessage) {
+        window.parent.postMessage({
+            action: 'changePage',
+            pageId: 'nfo'
+        }, '*');
+    }
+    
+    // Show a loader inside the iframe
+    showInFrameLoader();
+});
+
+// Function to show a loader inside the iframe
+function showInFrameLoader() {
+    // Create a loader overlay if it doesn't exist
+    if (!document.getElementById('inFrameLoader')) {
+        const loaderDiv = document.createElement('div');
+        loaderDiv.id = 'inFrameLoader';
+        loaderDiv.style.position = 'fixed';
+        loaderDiv.style.top = '0';
+        loaderDiv.style.left = '0';
+        loaderDiv.style.width = '100%';
+        loaderDiv.style.height = '100%';
+        loaderDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+        loaderDiv.style.display = 'flex';
+        loaderDiv.style.justifyContent = 'center';
+        loaderDiv.style.alignItems = 'center';
+        loaderDiv.style.zIndex = '10000';
+        
+        const spinner = document.createElement('div');
+        spinner.style.width = '50px';
+        spinner.style.height = '50px';
+        spinner.style.border = '5px solid #e2ebc7';
+        spinner.style.borderRadius = '50%';
+        spinner.style.borderTopColor = '#4d6a11';
+        spinner.style.animation = 'spin 1s linear infinite';
+        
+        // Add the keyframe animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `;
+        
+        document.head.appendChild(style);
+        loaderDiv.appendChild(spinner);
+        document.body.appendChild(loaderDiv);
+    } else {
+        // Show the existing loader
+        document.getElementById('inFrameLoader').style.display = 'flex';
+    }
+}
+
+// Add cursor pointer style to service items and NFO card button for better UX
+document.querySelectorAll('.service-item, .apply-button').forEach(element => {
+    element.style.cursor = 'pointer';
+});
+</script>
 </body>
 </html>
