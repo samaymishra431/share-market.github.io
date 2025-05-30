@@ -175,6 +175,31 @@
             color: #999;
             margin-bottom: 10px;
         }
+
+        /* Alert Styles */
+        .alert {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .alert i {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -188,6 +213,16 @@
         <h1 class="heading">Welcome Back</h1>
         <p class="subheading">Login to Your Trading Account</p>
         
+        <!-- Alerts -->
+        <div class="alert alert-success" id="successAlert" style="display:none;">
+            <i class="fas fa-check-circle"></i>
+            <span id="successAlertMsg">Login successful!</span>
+        </div>
+        <div class="alert alert-danger" id="errorAlert" style="display:none;">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorAlertMsg">Login failed!</span>
+        </div>
+
         <!-- Form Container -->
         <div class="form-container">
             <form class="login-form" id="loginForm">
@@ -239,12 +274,17 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const API_BASE_URL = 'https://7a72-2409-40d0-103d-f408-9c8c-66e4-7468-7836.ngrok-free.app';
             const loginForm = document.getElementById('loginForm');
             const userId = document.getElementById('userId');
             const password = document.getElementById('password');
             const togglePassword = document.getElementById('togglePassword');
             const loginBtn = document.getElementById('loginBtn');
-            
+            const successAlert = document.getElementById('successAlert');
+            const errorAlert = document.getElementById('errorAlert');
+            const successAlertMsg = document.getElementById('successAlertMsg');
+            const errorAlertMsg = document.getElementById('errorAlertMsg');
+
             // Toggle password visibility
             togglePassword.addEventListener('click', function() {
                 const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -287,39 +327,63 @@
                 });
             });
             
+            // Utility to show/hide alerts
+            function showAlert(type, message) {
+                successAlert.style.display = 'none';
+                errorAlert.style.display = 'none';
+                if (type === 'success') {
+                    successAlertMsg.textContent = message;
+                    successAlert.style.display = 'block';
+                } else if (type === 'error') {
+                    errorAlertMsg.textContent = message;
+                    errorAlert.style.display = 'block';
+                }
+            }
+
             // Form submission
-            loginForm.addEventListener('submit', function(e) {
+            loginForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                
+
+                // Hide alerts on new submit
+                successAlert.style.display = 'none';
+                errorAlert.style.display = 'none';
+
                 if (validateForm()) {
-                    // Here you would typically send the login credentials to your server
-                    console.log('Login attempted with:', {
-                        userId: userId.value,
-                        password: password.value
-                    });
-                    
-                    // Show SweetAlert2 success message
-                    Swal.fire({
-                        title: 'Login Successful!',
-                        text: 'Welcome to your trading account',
-                        icon: 'success',
-                        confirmButtonText: 'Continue to Dashboard',
-                        confirmButtonColor: '#62880a',
-                        timer: 2000,
-                        timerProgressBar: true
-                    }).then((result) => {
-                        // Redirect to dashboard after the alert
-                        window.location.href = 'dashboard.html';
-                    });
+                    loginBtn.disabled = true;
+                    loginBtn.textContent = 'Logging in...';
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'accept': '*/*'
+                            },
+                            body: JSON.stringify({
+                                userId: userId.value,
+                                password: password.value
+                            })
+                        });
+                        const data = await response.json();
+                        if (data && data.valid) {
+                            // Store token in localStorage
+                            if (data.details && data.details[0] && data.details[0].token) {
+                                localStorage.setItem('authToken', data.details[0].token);
+                            }
+                            showAlert('success', data.messages?.[0]?.message || 'Login Successful!');
+                            setTimeout(() => {
+                                window.location.href = 'dashboard.html';
+                            }, 1200);
+                        } else {
+                            showAlert('error', data.messages?.[0]?.message || 'Invalid credentials');
+                        }
+                    } catch (err) {
+                        showAlert('error', 'Unable to connect to server. Please try again later.');
+                    } finally {
+                        loginBtn.disabled = false;
+                        loginBtn.textContent = 'Login';
+                    }
                 } else {
-                    // Optional: Show error message with SweetAlert if validation fails
-                    Swal.fire({
-                        title: 'Login Failed',
-                        text: 'Please fill in all required fields',
-                        icon: 'error',
-                        confirmButtonText: 'Try Again',
-                        confirmButtonColor: '#62880a'
-                    });
+                    showAlert('error', 'Please fill in all required fields');
                 }
             });
         });
