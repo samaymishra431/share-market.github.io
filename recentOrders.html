@@ -35,12 +35,14 @@
     
     .date-filter {
         background-color: #f1f1f1;
-        padding: 12px;
+        padding: 20px 12px 12px 12px;
         border-radius: 5px;
         margin: 0 10px 15px 10px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: relative;
+        margin-top: 20px;
     }
     
     .date-label {
@@ -49,7 +51,12 @@
         color: white;
         border-radius: 12px;
         padding: 3px 10px;
-        margin-right: 10px;
+        position: absolute;
+        top: -14px;
+        left: 20px;
+        z-index: 2;
+        margin: 0;
+        /* Remove margin-right since label is floating */
     }
     
     .date-range {
@@ -186,14 +193,20 @@
 <div class="date-filter">
     <div class="date-label">Date Range</div>
     <div class="date-range">
-        <div class="date-from">From: 21st Apr 2025</div>
-        <div class="date-to">To: 21st Apr 2025</div>
+        <div class="date-from">
+            From:
+            <input type="date" id="date-from" style="margin-left:5px;">
+        </div>
+        <div class="date-to" style="margin-left:10px;">
+            To:
+            <input type="date" id="date-to" style="margin-left:5px;">
+        </div>
     </div>
 </div>
 
 <!-- Status Filter -->
 <div class="status-filter">
-    <div>Pending orders (6)</div>
+    <div id="pending-orders-count">Pending orders (0)</div>
     <div class="payment-filter">
         <i class="fas fa-wallet payment-icon"></i>
         Payment
@@ -201,82 +214,7 @@
 </div>
 
 <!-- Order Items -->
-<div class="order-item">
-    <div class="order-fund">Kotak Energy Opportunities Fund</div>
-    <div class="order-bottom">
-        <div class="order-amount">₹2,500</div>
-        <div class="order-status">
-            <span class="status-buy">Buy</span>
-            <span class="status-processing">Processing</span>
-        </div>
-    </div>
-</div>
-
-<div class="order-item">
-    <div class="order-fund">Quant Small Cap Fund</div>
-    <div class="order-bottom">
-        <div class="order-amount">₹2,500</div>
-        <div class="order-status">
-            <span class="status-sell">Sell</span>
-            <span class="status-completed">Order Completed</span>
-        </div>
-    </div>
-</div>
-
-<div class="order-item">
-    <div class="order-fund">Quant Small Cap Fund</div>
-    <div class="order-bottom">
-        <div class="order-amount">₹2,500</div>
-        <div class="order-status">
-            <span class="status-buy">Buy</span>
-            <span class="status-completed">Order Completed</span>
-        </div>
-    </div>
-</div>
-
-<div class="order-item">
-    <div class="order-fund">ICICI Prudential Nifty 50 Index Fund</div>
-    <div class="order-bottom">
-        <div class="order-amount">₹2,500</div>
-        <div class="order-status">
-            <span class="status-buy">Buy</span>
-            <span class="status-processing">Processing</span>
-        </div>
-    </div>
-</div>
-
-<div class="order-item">
-    <div class="order-fund">HDFC Mid-Cap Opportunities Fund</div>
-    <div class="order-bottom">
-        <div class="order-amount">₹2,500</div>
-        <div class="order-status">
-            <span class="status-buy">Buy</span>
-            <span class="status-completed">Order Completed</span>
-        </div>
-    </div>
-</div>
-
-<div class="order-item">
-    <div class="order-fund">HDFC Mid-Cap Opportunities Fund</div>
-    <div class="order-bottom">
-        <div class="order-amount">₹2,500</div>
-        <div class="order-status">
-            <span class="status-buy">Buy</span>
-            <span class="status-processing">Processing</span>
-        </div>
-    </div>
-</div>
-
-<div class="order-item">
-    <div class="order-fund">HDFC Mid-Cap Opportunities Fund</div>
-    <div class="order-bottom">
-        <div class="order-amount">₹2,500</div>
-        <div class="order-status">
-            <span class="status-buy">Buy</span>
-            <span class="status-completed">Order Completed</span>
-        </div>
-    </div>
-</div>
+<div id="orders-list"></div>
 
 <!-- Time Filters -->
 <div class="time-filters">
@@ -287,18 +225,456 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Time filter functionality
+    // --- Use static data instead of backend fetch ---
+    const ordersData = {
+        "data": [
+            [
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "Motilal Oswal Nifty Microcap 250 Index Fund - Regular Plan",
+                    "orderDate": "06-01-2025",
+                    "units": "138831",
+                    "amount": "2499999.99",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "127",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "Axis Liquid Fund - Regular Growth",
+                    "orderDate": "19-11-2024",
+                    "units": "1435.2570",
+                    "amount": "3999999.99",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "128",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "Axis Liquid Fund - Regular Growth",
+                    "orderDate": "03-12-2024",
+                    "units": "1435.2570",
+                    "amount": "4009281.0",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "128",
+                    "purchaseType": "Sell"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "Axis Small Cap Fund - Regular Growth",
+                    "orderDate": "11-12-2024",
+                    "units": "22619.2100",
+                    "amount": "2499999.99",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "128",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "quant Liquid Fund - Regular Plan",
+                    "orderDate": "26-12-2024",
+                    "units": "125335",
+                    "amount": "4999999.99",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "166",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "quant Liquid Fund - Regular Plan",
+                    "orderDate": "26-12-2024",
+                    "units": "125335",
+                    "amount": "4999999.99",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "166",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "quant Liquid Fund - Regular Plan",
+                    "orderDate": "21-11-2024",
+                    "units": "100886.3000",
+                    "amount": "3999999.99",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "166",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "quant Liquid Fund - Regular Plan",
+                    "orderDate": "16-12-2024",
+                    "units": "50000",
+                    "amount": "1991565.0",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "166",
+                    "purchaseType": "Sell"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "quant Liquid Fund - Regular Plan",
+                    "orderDate": "23-12-2024",
+                    "units": "50886.3300",
+                    "amount": "2029352.0",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "166",
+                    "purchaseType": "Sell"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "quant Liquid Fund - Regular Plan",
+                    "orderDate": "06-01-2025",
+                    "units": "125335",
+                    "amount": "5012747.0",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "166",
+                    "purchaseType": "Sell"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "quant Liquid Fund - Regular Plan",
+                    "orderDate": "06-01-2025",
+                    "units": "125335",
+                    "amount": "5012747.0",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "166",
+                    "purchaseType": "Sell"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "TRUSTMF LIQUID FUND - Regular Plan - Growth",
+                    "orderDate": "14-11-2024",
+                    "units": "8.2150",
+                    "amount": "10000.0",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "185",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "TRUSTMF LIQUID FUND - Regular Plan - Growth",
+                    "orderDate": "26-11-2024",
+                    "units": "8.2150",
+                    "amount": "10015.73",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "185",
+                    "purchaseType": "Sell"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "TRUSTMF SMALL CAP FUND - Regular Plan Growth",
+                    "orderDate": "19-11-2024",
+                    "units": "255610.9000",
+                    "amount": "2499999.99",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "185",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "NIPPON INDIA ARBITRAGE FUND - GROWTH PLAN",
+                    "orderDate": "21-11-2024",
+                    "units": "156574.3000",
+                    "amount": "3999999.99",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "RMF",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "NIPPON INDIA ARBITRAGE FUND - GROWTH PLAN",
+                    "orderDate": "21-11-2024",
+                    "units": "58715.3600",
+                    "amount": "1500000.0",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "RMF",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "NIPPON INDIA ARBITRAGE FUND - GROWTH PLAN",
+                    "orderDate": "03-01-2025",
+                    "units": "97147.0400",
+                    "amount": "2499999.99",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "RMF",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "NIPPON INDIA ARBITRAGE FUND - GROWTH PLAN",
+                    "orderDate": "08-01-2025",
+                    "units": "194196.7000",
+                    "amount": "4999999.99",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "RMF",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "NIPPON INDIA ARBITRAGE FUND - GROWTH PLAN",
+                    "orderDate": "10-01-2025",
+                    "units": "174596.7000",
+                    "amount": "4499999.99",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "RMF",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "NIPPON INDIA ARBITRAGE FUND - GROWTH PLAN",
+                    "orderDate": "15-01-2025",
+                    "units": "290918.8000",
+                    "amount": "7499999.98",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "RMF",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "NIPPON INDIA ARBITRAGE FUND - GROWTH PLAN",
+                    "orderDate": "16-01-2025",
+                    "units": "116356.2000",
+                    "amount": "2999999.99",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "RMF",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "NIPPON INDIA MULTI CAP FUND - GROWTH PLAN GROWTH OPTION",
+                    "orderDate": "10-01-2025",
+                    "units": "10.7570",
+                    "amount": "3000.0",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "RMF",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "NIPPON INDIA GROWTH FUND - GROWTH PLAN GROWTH OPTION",
+                    "orderDate": "11-12-2024",
+                    "units": "591.6530",
+                    "amount": "2499999.99",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "RMF",
+                    "purchaseType": "Buy"
+                },
+                {
+                    "clientCode": null,
+                    "clientName": null,
+                    "schemeName": "NIPPON INDIA MULTI ASSET ALLOCATION FUND - GROWTH PLAN",
+                    "orderDate": "30-12-2024",
+                    "units": "25006.7500",
+                    "amount": "500000.0",
+                    "status": null,
+                    "remark": null,
+                    "orderNo": "RMF",
+                    "purchaseType": "Buy"
+                }
+            ]
+        ],
+        "messages": [
+            {
+                "message": "Orders fetched successfully"
+            }
+        ],
+        "success": true,
+        "totalElements": 24,
+        "totalPages": 1
+    };
+
+    let orders = [];
+    let allOrders = [];
+
+    // Helper to get status class
+    function getStatusClass(type, status) {
+        if (type === "Buy") {
+            if (status === "Processing") return "status-processing";
+            if (status === "Order Completed") return "status-completed";
+            return "status-buy";
+        }
+        if (type === "Sell") {
+            if (status === "Processing") return "status-processing";
+            if (status === "Order Completed") return "status-completed";
+            return "status-sell";
+        }
+        return "";
+    }
+
+    // Helper to convert DD-MM-YYYY to YYYY-MM-DD
+    function toISODate(ddmmyyyy) {
+        if (!ddmmyyyy) return '';
+        const [dd, mm, yyyy] = ddmmyyyy.split('-');
+        return `${yyyy}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}`;
+    }
+
+    // Helper to convert YYYY-MM-DD to DD-MM-YYYY
+    function toDisplayDate(iso) {
+        if (!iso) return '';
+        const [yyyy, mm, dd] = iso.split('-');
+        return `${dd}-${mm}-${yyyy}`;
+    }
+
+    // Render orders with optional date filtering
+    function renderOrders(filteredOrders = null) {
+        const ordersList = document.getElementById('orders-list');
+        ordersList.innerHTML = '';
+        let pendingCount = 0;
+        const list = filteredOrders || orders;
+        list.forEach(order => {
+            if (order.status === "Processing") pendingCount++;
+            const orderDiv = document.createElement('div');
+            orderDiv.className = 'order-item';
+            orderDiv.innerHTML = `
+                <div class="order-fund">${order.fund}</div>
+                <div class="order-bottom">
+                    <div class="order-amount">₹${Number(order.amount).toLocaleString()}</div>
+                    <div class="order-status">
+                        <span class="${order.type === 'Buy' ? 'status-buy' : 'status-sell'}">${order.type}</span>
+                        <span class="${order.status === 'Processing' ? 'status-processing' : 'status-completed'}">${order.status}</span>
+                    </div>
+                </div>
+            `;
+            ordersList.appendChild(orderDiv);
+        });
+        document.getElementById('pending-orders-count').textContent = `Pending orders (${pendingCount})`;
+    }
+
+    // Date filter logic
+    function filterByDate() {
+        const from = document.getElementById('date-from').value;
+        const to = document.getElementById('date-to').value;
+        let filtered = orders;
+        if (from) {
+            filtered = filtered.filter(o => o.isoDate >= from);
+        }
+        if (to) {
+            filtered = filtered.filter(o => o.isoDate <= to);
+        }
+        renderOrders(filtered);
+    }
+
+    // Remove fetchOrders and instead use static data on DOMContentLoaded
+    function setupOrdersFromData() {
+        // Flatten and map backend data to UI format
+        const backendOrders = (ordersData.data && ordersData.data.flat()) || [];
+        allOrders = backendOrders.map(o => ({
+            fund: o.schemeName,
+            amount: o.amount,
+            type: o.purchaseType,
+            status: o.status || "Order Completed",
+            date: o.orderDate,
+            isoDate: toISODate(o.orderDate)
+        }));
+        orders = allOrders;
+        setupDateFilters();
+        renderOrders();
+    }
+
+    // Set up date pickers based on orders
+    function setupDateFilters() {
+        if (!orders.length) return;
+        const isoDates = orders.map(o => o.isoDate).sort();
+        const minDate = isoDates[0];
+        const maxDate = isoDates[isoDates.length - 1];
+        const dateFrom = document.getElementById('date-from');
+        const dateTo = document.getElementById('date-to');
+        dateFrom.value = minDate;
+        dateTo.value = maxDate;
+        dateFrom.min = minDate;
+        dateFrom.max = maxDate;
+        dateTo.min = minDate;
+        dateTo.max = maxDate;
+        dateFrom.addEventListener('change', filterByDate);
+        dateTo.addEventListener('change', filterByDate);
+    }
+
+    // Time filter functionality (optional: implement if needed)
     const timeFilterBtns = document.querySelectorAll('.time-filter-btn');
-    
+    const dateFrom = document.getElementById('date-from');
+    const dateTo = document.getElementById('date-to');
     timeFilterBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-            // Remove active class from all buttons
             timeFilterBtns.forEach(b => b.classList.remove('active'));
-            
-            // Add active class to clicked button
             this.classList.add('active');
+            // Set date pickers based on button
+            const today = new Date();
+            let fromDate, toDate;
+            if (this.textContent.includes('7')) {
+                // 7 days: from 6 days ago to today
+                fromDate = new Date(today);
+                fromDate.setDate(today.getDate() - 6);
+                toDate = today;
+            } else if (this.textContent.includes('30')) {
+                // 30 days: from 29 days ago to today
+                fromDate = new Date(today);
+                fromDate.setDate(today.getDate() - 29);
+                toDate = today;
+            } else if (this.textContent.includes('Month')) {
+                // This Month: from 1st of this month to today
+                fromDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                toDate = today;
+            }
+            // Format to YYYY-MM-DD
+            function fmt(d) {
+                return d.toISOString().slice(0, 10);
+            }
+            if (fromDate && toDate) {
+                dateFrom.value = fmt(fromDate);
+                dateTo.value = fmt(toDate);
+                filterByDate();
+            }
         });
     });
+
+    // On page load, use static data
+    window.addEventListener('DOMContentLoaded', setupOrdersFromData);
 </script>
 </body>
 </html>
