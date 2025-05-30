@@ -38,12 +38,8 @@
         padding: 20px 12px 12px 12px;
         border-radius: 5px;
         margin: 0 10px 15px 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
         position: relative;
         margin-top: 20px;
-        flex-wrap: wrap;
     }
     
     .date-label {
@@ -57,14 +53,11 @@
         left: 20px;
         z-index: 2;
         margin: 0;
-        /* Remove margin-right since label is floating */
     }
     
     .date-range {
         display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: flex-start;
+        gap: 8px;
         align-items: center;
         font-size: 14px;
         width: 100%;
@@ -73,9 +66,52 @@
     .date-from, .date-to {
         display: flex;
         align-items: center;
-        min-width: 120px;
-        margin-bottom: 0;
-        flex: 1 1 0;
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .date-from input,
+    .date-to input {
+        margin-left: 5px;
+        padding: 4px 6px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 13px;
+        width: 100%;
+        min-width: 80px;
+    }
+    
+    /* Responsive adjustments for very small screens */
+    @media (max-width: 400px) {
+        .date-range {
+            gap: 4px;
+            font-size: 12px;
+        }
+        
+        .date-from input,
+        .date-to input {
+            font-size: 12px;
+            padding: 3px 4px;
+            min-width: 70px;
+        }
+        
+        .date-filter {
+            padding: 20px 8px 12px 8px;
+        }
+    }
+    
+    @media (max-width: 320px) {
+        .date-range {
+            gap: 2px;
+            font-size: 11px;
+        }
+        
+        .date-from input,
+        .date-to input {
+            font-size: 11px;
+            padding: 2px 3px;
+            min-width: 60px;
+        }
     }
     
     .status-filter {
@@ -185,33 +221,9 @@
         border-bottom: 2px solid #6B8E23;
         color: #6B8E23;
     }
-
-    @media (max-width: 600px) {
-        .date-filter {
-            flex-direction: row;
-            align-items: center;
-            padding: 12px 4px 8px 4px;
-        }
-        .date-range {
-            flex-direction: row;
-            gap: 6px;
-            width: 100%;
-        }
-        .date-from, .date-to {
-            width: auto;
-            min-width: 0;
-            flex: 1 1 0;
-        }
-        .date-label {
-            left: 10px;
-            font-size: 11px;
-        }
-    }
 </style>
 </head>
 <body>
-
-
 
 <!-- Header -->
 <div class="header">
@@ -224,11 +236,11 @@
     <div class="date-range">
         <div class="date-from">
             From:
-            <input type="date" id="date-from" style="margin-left:5px;max-width:140px;">
+            <input type="date" id="date-from">
         </div>
-        <div class="date-to" style="margin-left:10px;">
+        <div class="date-to">
             To:
-            <input type="date" id="date-to" style="margin-left:5px;max-width:140px;">
+            <input type="date" id="date-to">
         </div>
     </div>
 </div>
