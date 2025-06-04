@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recent Orders - FundMF</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+    
+    body {
+        background-color: #f8f9fa;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+    }
+    
+    .header {
+        background-color: #fff;
+        color: #333;
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+    
+    .date-filter {
+        background-color: #f1f1f1;
+        padding: 20px 12px 12px 12px;
+        border-radius: 5px;
+        margin: 0 10px 15px 10px;
+        position: relative;
+        margin-top: 20px;
+    }
+    
+    .date-label {
+        font-size: 12px;
+        background-color: #6B8E23;
+        color: white;
+        border-radius: 12px;
+        padding: 3px 10px;
+        position: absolute;
+        top: -14px;
+        left: 20px;
+        z-index: 2;
+        margin: 0;
+    }
+    
+    .date-range {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-size: 14px;
+        width: 100%;
+    }
+    
+    .date-from, .date-to {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .date-from input,
+    .date-to input {
+        margin-left: 5px;
+        padding: 4px 6px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 13px;
+        width: 100%;
+        min-width: 80px;
+    }
+    
+    /* Responsive adjustments for very small screens */
+    @media (max-width: 400px) {
+        .date-range {
+            gap: 4px;
+            font-size: 12px;
+        }
+        
+        .date-from input,
+        .date-to input {
+            font-size: 12px;
+            padding: 3px 4px;
+            min-width: 70px;
+        }
+        
+        .date-filter {
+            padding: 20px 8px 12px 8px;
+        }
+    }
+    
+    @media (max-width: 320px) {
+        .date-range {
+            gap: 2px;
+            font-size: 11px;
+        }
+        
+        .date-from input,
+        .date-to input {
+            font-size: 11px;
+            padding: 2px 3px;
+            min-width: 60px;
+        }
+    }
+    
+    .status-filter {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 15px 15px 15px;
+        font-size: 15px;
+        font-weight: bold;
+    }
+    
+    .payment-filter {
+        color: #6B8E23;
+        display: flex;
+        align-items: center;
+    }
+    
+    .payment-icon {
+        margin-right: 5px;
+        font-size: 16px;
+    }
+    
+    .order-item {
+        background-color: white;
+        border-radius: 5px;
+        margin: 0 10px 10px 10px;
+        padding: 12px;
+        border: 1px solid #eee;
+    }
+    
+    .order-fund {
+        font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+    
+    .order-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 5px;
+    }
+    
+    .order-amount {
+        color: #666;
+    }
+    
+    .order-status {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+    
+    .status-buy {
+        background-color: #6B8E23;
+        color: white;
+        border-radius: 15px;
+        padding: 3px 12px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .status-sell {
+        background-color: #ff6b6b;
+        color: white;
+        border-radius: 15px;
+        padding: 3px 12px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .status-processing {
+        background-color: #e9ecef;
+        color: #333;
+        border-radius: 15px;
+        padding: 3px 12px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .status-completed {
+        background-color: #c8e6c9;
+        color: #333;
+        border-radius: 15px;
+        padding: 3px 12px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .time-filters {
+        display: flex;
+        justify-content: space-around;
+        padding: 15px 10px;
+        border-top: 1px solid #ddd;
+        margin-top: 10px;
+    }
+    
+    .time-filter-btn {
+        background: none;
+        border: none;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        padding: 5px 15px;
+    }
+    
+    .time-filter-btn.active {
+        border-bottom: 2px solid #6B8E23;
+        color: #6B8E23;
+    }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    Recent Orders
+</div>
+
+<!-- Date Filter -->
+<div class="date-filter">
+    <div class="date-label">Date Range</div>
+    <div class="date-range">
+        <div class="date-from">
+            From:
+            <input type="date" id="date-from">
+        </div>
+        <div class="date-to">
+            To:
+            <input type="date" id="date-to">
+        </div>
+    </div>
+</div>
+
+<!-- Status Filter -->
+<div class="status-filter">
+    <div id="pending-orders-count">Pending orders (0)</div>
+    <div class="payment-filter">
+        <i class="fas fa-wallet payment-icon"></i>
+        Payment
+    </div>
+</div>
+
+<!-- Order Items -->
+<div id="orders-list"></div>
+
+<!-- Time Filters -->
+<div class="time-filters">
+    <button class="time-filter-btn">7 days</button>
+    <button class="time-filter-btn">30 days</button>
+    <button class="time-filter-btn active">This Month</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    const API_BASE_URL = 'http://122.176.151.191:9090/MutualFund';
+    let orders = [];
+    let allOrders = [];
+
+    // Helper to get status class
+    function getStatusClass(type, status) {
+        if (type === "Buy") {
+            if (status === "Processing") return "status-processing";
+            if (status === "Order Completed") return "status-completed";
+            return "status-buy";
+        }
+        if (type === "Sell") {
+            if (status === "Processing") return "status-processing";
+            if (status === "Order Completed") return "status-completed";
+            return "status-sell";
+        }
+        return "";
+    }
+
+    // Helper to convert DD-MM-YYYY to YYYY-MM-DD
+    function toISODate(ddmmyyyy) {
+        if (!ddmmyyyy) return '';
+        const [dd, mm, yyyy] = ddmmyyyy.split('-');
+        return `${yyyy}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}`;
+    }
+
+    // Helper to convert YYYY-MM-DD to DD-MM-YYYY
+    function toDisplayDate(iso) {
+        if (!iso) return '';
+        const [yyyy, mm, dd] = iso.split('-');
+        return `${dd}-${mm}-${yyyy}`;
+    }
+
+    // Render orders with optional date filtering
+    function renderOrders(filteredOrders = null) {
+        const ordersList = document.getElementById('orders-list');
+        ordersList.innerHTML = '';
+        let pendingCount = 0;
+        const list = filteredOrders || orders;
+        list.forEach(order => {
+            if (order.status === "Processing") pendingCount++;
+            const orderDiv = document.createElement('div');
+            orderDiv.className = 'order-item';
+            orderDiv.innerHTML = `
+                <div class="order-fund">${order.fund}</div>
+                <div class="order-bottom">
+                    <div class="order-amount">₹${Number(order.amount).toLocaleString()}</div>
+                    <div class="order-status">
+                        <span class="${order.type === 'Buy' ? 'status-buy' : 'status-sell'}">${order.type}</span>
+                        <span class="${order.status === 'Processing' ? 'status-processing' : 'status-completed'}">${order.status}</span>
+                    </div>
+                </div>
+            `;
+            ordersList.appendChild(orderDiv);
+        });
+        document.getElementById('pending-orders-count').textContent = `Pending orders (${pendingCount})`;
+    }
+
+    // Date filter logic
+    function filterByDate() {
+        const from = document.getElementById('date-from').value;
+        const to = document.getElementById('date-to').value;
+        let filtered = orders;
+        if (from) {
+            filtered = filtered.filter(o => o.isoDate >= from);
+        }
+        if (to) {
+            filtered = filtered.filter(o => o.isoDate <= to);
+        }
+        renderOrders(filtered);
+    }
+
+    // Fetch orders from backend
+    async function fetchOrders() {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            window.location.href = 'index.html';
+            return;
+        }
+        try {
+            const resp = await fetch(`${API_BASE_URL}/recentOrder?page=0&size=100`, {
+                method: 'GET',
+                headers: {
+                    'accept': '*/*',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const contentType = resp.headers.get('content-type');
+            if (!resp.ok) {
+                throw new Error(`HTTP error! status: ${resp.status}`);
+            }
+            if (!contentType || !contentType.includes('application/json')) {
+                // Not JSON, likely an error page
+                const text = await resp.text();
+                document.getElementById('orders-list').innerHTML = '<div class="alert alert-danger">Server returned an unexpected response. Please check if the backend is running and ngrok tunnel is active.<br><pre style="white-space:pre-wrap;word-break:break-all;">' + text.substring(0, 300) + '...</pre></div>';
+                return;
+            }
+            const data = await resp.json();
+            // Flatten and map backend data to UI format
+            const backendOrders = (data.data && data.data.flat()) || [];
+            allOrders = backendOrders.map(o => ({
+                fund: o.schemeName,
+                amount: o.amount,
+                type: o.purchaseType,
+                status: o.status || "Order Completed",
+                date: o.orderDate,
+                isoDate: toISODate(o.orderDate)
+            }));
+            orders = allOrders;
+            setupDateFilters();
+            renderOrders();
+        } catch (err) {
+            document.getElementById('orders-list').innerHTML = '<div class="alert alert-danger">Failed to load orders.<br>' + (err.message || '') + '</div>';
+        }
+    }
+
+    // Set up date pickers based on orders
+    function setupDateFilters() {
+        if (!orders.length) return;
+        const isoDates = orders.map(o => o.isoDate).sort();
+        const minDate = isoDates[0];
+        const maxDate = isoDates[isoDates.length - 1];
+        const dateFrom = document.getElementById('date-from');
+        const dateTo = document.getElementById('date-to');
+        dateFrom.value = minDate;
+        dateTo.value = maxDate;
+        dateFrom.min = minDate;
+        dateFrom.max = maxDate;
+        dateTo.min = minDate;
+        dateTo.max = maxDate;
+        dateFrom.addEventListener('change', filterByDate);
+        dateTo.addEventListener('change', filterByDate);
+    }
+
+    // Time filter functionality (optional: implement if needed)
+    const timeFilterBtns = document.querySelectorAll('.time-filter-btn');
+    const dateFrom = document.getElementById('date-from');
+    const dateTo = document.getElementById('date-to');
+    timeFilterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            timeFilterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            // Set date pickers based on button
+            const today = new Date();
+            let fromDate, toDate;
+            if (this.textContent.includes('7')) {
+                // 7 days: from 6 days ago to today
+                fromDate = new Date(today);
+                fromDate.setDate(today.getDate() - 6);
+                toDate = today;
+            } else if (this.textContent.includes('30')) {
+                // 30 days: from 29 days ago to today
+                fromDate = new Date(today);
+                fromDate.setDate(today.getDate() - 29);
+                toDate = today;
+            } else if (this.textContent.includes('Month')) {
+                // This Month: from 1st of this month to today
+                fromDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                toDate = today;
+            }
+            // Format to YYYY-MM-DD
+            function fmt(d) {
+                return d.toISOString().slice(0, 10);
+            }
+            if (fromDate && toDate) {
+                dateFrom.value = fmt(fromDate);
+                dateTo.value = fmt(toDate);
+                filterByDate();
+            }
+        });
+    });
+
+    // On page load, fetch orders
+    window.addEventListener('DOMContentLoaded', fetchOrders);
+</script>
+</body>
+</html>

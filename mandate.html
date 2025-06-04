@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandate Status - FundMF</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background-color: white;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-top: 25px;
+        }
+        
+        .logo {
+            height: 40px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        
+        .page-title {
+            display: block;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .content-container {
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        
+        .export-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            background-color: white;
+            font-size: 14px;
+            cursor: pointer;
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .export-button i {
+            font-size: 18px;
+        }
+        
+        .excel-icon {
+            color: #1D6F42;
+        }
+        
+        .pdf-icon {
+            color: #FF0000;
+        }
+        
+        .info-section {
+            margin-bottom: 20px;
+        }
+        
+        .info-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .status-pill {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: #e3f9e5;
+            color: #0d6832;
+            border-radius: 20px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <img src="./assets/images/logo.jpeg" alt="FundMF Logo" class="logo">
+        <span class="page-title">Mandate Status</span>
+    </div>
+
+    <!-- Content Container -->
+    <div class="content-container">
+        <!-- Export Buttons -->
+        <div class="export-buttons">
+            <a href="#" class="export-button">
+                <i class="fas fa-file-excel excel-icon"></i>
+                Excel File
+            </a>
+            <a href="#" class="export-button">
+                <i class="fas fa-file-pdf pdf-icon"></i>
+                PDF File
+            </a>
+        </div>
+        
+        <!-- Status Information -->
+        <div class="info-section">
+            <p class="info-label">Status</p>
+            <div class="info-value" style="text-align: center;">
+                <span class="status-pill">ACTIVE</span>
+            </div>
+        </div>
+        
+        <!-- Mandate ID -->
+        <div class="info-section">
+            <p class="info-label">MANDATE ID</p>
+            <div class="info-value">MANDATE123456</div>
+        </div>
+        
+        <!-- Client Code -->
+        <div class="info-section">
+            <p class="info-label">Client Code</p>
+            <div class="info-value">Client Code</div>
+        </div>
+        
+        <!-- Client Name -->
+        <div class="info-section">
+            <p class="info-label">Client Name</p>
+            <div class="info-value">Client Name</div>
+        </div>
+        
+        <!-- Bank Name -->
+        <div class="info-section">
+            <p class="info-label">Bank Name</p>
+            <div class="info-value">Bank Name</div>
+        </div>
+        
+        <!-- Bank Branch -->
+        <div class="info-section">
+            <p class="info-label">Bank Branch</p>
+            <div class="info-value">A-101, Connaught Place, New Delhi, Delhi 110001, India</div>
+        </div>
+        
+        <!-- Amount -->
+        <div class="info-section">
+            <p class="info-label">Amount</p>
+            <div class="info-value">Amount</div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Export button functionality
+        document.querySelectorAll('.export-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const fileType = this.textContent.trim();
+                alert(`Exporting ${fileType}...`);
+                // In a real app, this would trigger the file download
+            });
+        });
+    </script>
+</body>
+</html>

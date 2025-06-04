@@ -1,0 +1,104 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+.container {
+    max-width: 800px;
+    padding: 20px;
+}
+.contact-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.callback-card {
+    background-color: #4d6a11;
+    color: white;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+}
+.dealer-card {
+    background-color: #4d6a11;
+    color: white;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+}
+.upload-btn {
+    border: 2px dashed #ccc;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.upload-btn:hover {
+    background-color: #f0f0f0;
+    border-color: #b4e600;
+}
+.upload-icon {
+    background-color: #dce6c0;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+.send-btn {
+    background-color: #4d6a11;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 10px;
+    width: 100%;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+.send-btn:hover {
+    background-color: #5d7a21;
+    transform: translateY(-2px);
+}
+.submit-btn {
+    background-color: #b4e600;
+    color: #333;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 30px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+.submit-btn:hover {
+    background-color: #c4f610;
+    transform: translateY(-2px);
+}
+.dealer-info {
+    margin-top: 15px;
+}
+.dealer-info i {
+    margin-right: 10px;
+    margin-bottom: 8px;
+}
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #4d6a11;
+}
+@media (max-width: 576px) {
+    .container {
+        padding: 15px;
+    }
+    .dealer-info div {
+        margin-bottom: 15px;
+    }
+}
