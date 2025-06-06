@@ -212,11 +212,7 @@
     }
     .gain-amount { color: #2e8b57; } /* matches home.html */
     .loss-amount { color: #ff6b6b; } /* matches home.html */
-    
-    
-    
-    
-    
+
     .loss-icon {
         color: #ff6b6b;
         font-size: 14px;
@@ -259,24 +255,33 @@
         text-align: center;
     }
     
-    .service-icon-box {
-        background-color: #a5c765;
-        border-radius: 10px;
-        width: 65px;
-        height: 65px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 5px;
-    }
-    
-    .service-icon {
-        font-size: 24px;
-    }
-    
-    .service-label {
-        font-size: 14px;
-    }
+   .service-icon-box {
+    background-color: #a5c765;
+    border-radius: 10px;
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.service-icon {
+    width: 32px;         /* Or any size that fits well */
+    height: 32px;
+    object-fit: contain; /* Keeps aspect ratio */
+}
+
+#largeServiceIcon {
+    width: 40px;         /* Or any size that fits well */
+    height: 40px;
+    object-fit: contain; /* Keeps aspect ratio */
+}
+
+.service-label {
+    font-size: 14px;
+}
+
     
     .new-fund-card {
         background-color: white;
@@ -491,6 +496,7 @@
         text-align: center;
         font-size: 15px;
     }
+  
 </style>
 </head>
 <body>
@@ -658,37 +664,37 @@
 <div class="services-grid">
     <div class="service-item" data-page="createLumpsum" data-service="purchase">
         <div class="service-icon-box">
-            <i class="fas fa-handshake service-icon"></i>
+            <img src="./assets/images/purchase.png" alt="Purchase Icon" class="service-icon" id="largeServiceIcon">
         </div>
         <div class="service-label">Purchase</div>
     </div>
     <div class="service-item" data-page="createSip" data-service="sip">
         <div class="service-icon-box">
-            <i class="fas fa-chart-bar service-icon"></i>
+            <img src="./assets/images/growth.png" alt="SIP Icon" class="service-icon">
         </div>
         <div class="service-label">SIP</div>
     </div>
     <div class="service-item" data-page="createStp" data-service="stp">
         <div class="service-icon-box">
-            <i class="fas fa-file-alt service-icon"></i>
+            <img src="./assets/images/stp.png" alt="STP Icon" class="service-icon" id="largeServiceIcon">
         </div>
         <div class="service-label">STP</div>
     </div>
     <div class="service-item" data-page="createSwp" data-service="swp">
         <div class="service-icon-box">
-            <i class="fas fa-coins service-icon"></i>
+             <img src="./assets/images/profit.png" alt="SWP Icon" class="service-icon" id="largeServiceIcon">
         </div>
         <div class="service-label">SWP</div>
     </div>
     <div class="service-item" data-page="nfo" data-service="nfo">
         <div class="service-icon-box">
-            <i class="fas fa-rocket service-icon"></i>
+        <img src="./assets/images/nfo.png" alt="SWP Icon" class="service-icon">
         </div>
         <div class="service-label">NFO</div>
     </div>
     <div class="service-item" data-page="portfolioPage" data-service="redeem">
         <div class="service-icon-box">
-            <i class="fas fa-wallet service-icon"></i>
+            <img src="./assets/images/reedem.png" alt="Reedem Icon" class="service-icon" id="largeServiceIcon">
         </div>
         <div class="service-label">Redeem</div>
     </div>
