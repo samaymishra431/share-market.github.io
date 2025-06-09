@@ -263,157 +263,234 @@
           'createSwp',
           'createLumpsum',
           'createStp',
-          'createMandate' // <-- Add this line
+          'createMandate'
          ];
-          const navItems = document.querySelectorAll('.nav-item');
-          
-          // Function to change page with loader
-          function changePage(pageId) {
-              // Only proceed if this is a valid page ID
-              if (pageIds.includes(pageId)) {
-                  // Hide all pages
-                  pageIds.forEach(id => document.getElementById(id).classList.remove('active'));
-                  
-                  // Show selected page
-                  document.getElementById(pageId).classList.add('active');
-                  
-                  // Show the loader for the selected page
-                  const pageContainer = document.getElementById(pageId);
-                  const loader = pageContainer.querySelector('.page-loader');
-                  if (loader) {
-                      loader.classList.remove('hidden');
-                      // Set timestamp for when the loader was shown
-                      loader.setAttribute('data-shown-time', Date.now());
-                      
-                      // Force hide loader after a short delay (backup solution)
-                      setTimeout(() => {
-                          loader.classList.add('hidden');
-                      }, 2000);
-                  }
-                  
-                  // Refresh iframe src to ensure content loads properly
-                  const iframe = pageContainer.querySelector('iframe');
-                  if (iframe) {
-                      const currentSrc = iframe.src;
-                      iframe.src = "about:blank";
-                      setTimeout(() => {
-                          iframe.src = currentSrc;
-                      }, 50);
-                  }
-                  
-                  // Update nav items
-                  navItems.forEach(nav => nav.classList.remove('active'));
-                  const navId = pageId.replace('Page', 'Nav');
-                  document.getElementById(navId)?.classList.add('active');
-              }
-          }
-          
-          // Set up click handlers for nav items
-          navItems.forEach(item => {
-              item.addEventListener('click', function() {
-                  const navId = this.id;
-                  const pageId = navId.replace('Nav', 'Page');
-                  changePage(pageId);
-              });
-          });
          
-          // Listen for messages from iframes
-          window.addEventListener('message', function(event) {
-              if (event.data && event.data.action === 'changePage') {
-                  changePage(event.data.pageId);
-              }
-          });
+         // Navigation stack to track page history
+         const navigationStack = ['homePage'];
+         let isHandlingPopState = false;
          
-          // Apply scrollbar hiding to iframes and handle iframe loading
-          document.querySelectorAll('iframe').forEach(iframe => {
-              // Force hide loader when iframe loads or errors
-              function hideLoader() {
-                  const loaderId = iframe.getAttribute('data-loader');
-                  if (loaderId) {
-                      const loader = document.getElementById(loaderId);
-                      if (loader) {
-                          loader.classList.add('hidden');
-                      }
-                  }
-              }
-              
-              // Set events to hide loader
-              iframe.onload = function() {
-                  hideLoader();
-                  
-                  try {
-                      const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-                      
-                      const style = iframeDocument.createElement('style');
-                      style.textContent = `
-                          ::-webkit-scrollbar {
-                              display: none;
-                          }
-                          body {
-                              -ms-overflow-style: none;
-                              scrollbar-width: none;
-                              max-width: 800px;
-                              margin: 0 auto;
-                          }
-                      `;
-                      
-                      iframeDocument.head.appendChild(style);
-                  } catch (e) {
-                      console.log("Cannot access iframe content due to same-origin policy");
-                  }
-              };
-              
-              // Also handle error cases
-              iframe.onerror = hideLoader;
-              
-              // If iframe fails to load within 3 seconds, hide the loader anyway
-              setTimeout(() => {
-                  const loaderId = iframe.getAttribute('data-loader');
-                  if (loaderId) {
-                      const loader = document.getElementById(loaderId);
-                      if (loader && !loader.classList.contains('hidden')) {
-                          loader.classList.add('hidden');
-                      }
-                  }
-              }, 3000);
-          });
-          
-          // Handle all loaders
-          window.addEventListener('DOMContentLoaded', () => {
-              // Hide all loaders on the initial page after a short delay
-              setTimeout(() => {
-                  document.querySelectorAll('.page-loader').forEach(loader => {
-                      loader.classList.add('hidden');
-                  });
-              }, 800); // Show loader for at least 800ms for better UX
-              
-              // Add global backup solution to hide all loaders after 2.5 seconds
-              // This ensures no loader gets stuck
-              setInterval(() => {
-                  document.querySelectorAll('.page-loader').forEach(loader => {
-                      if (!loader.classList.contains('hidden') && 
-                          !loader.parentElement.classList.contains('active')) {
-                          loader.classList.add('hidden');
-                      }
-                  });
-                  
-                  // For the active page, ensure its loader doesn't stay visible too long
-                  const activePage = document.querySelector('.page-container.active');
-                  if (activePage) {
-                      const activeLoader = activePage.querySelector('.page-loader');
-                      if (activeLoader && !activeLoader.classList.contains('hidden')) {
-                          const loaderShownTime = activeLoader.getAttribute('data-shown-time');
-                          const currentTime = Date.now();
-                          
-                          if (!loaderShownTime) {
-                              activeLoader.setAttribute('data-shown-time', currentTime);
-                          } else if (currentTime - parseInt(loaderShownTime) > 2500) {
-                              activeLoader.classList.add('hidden');
-                          }
-                      }
-                  }
-              }, 500);
-          });
+         const navItems = document.querySelectorAll('.nav-item');
+         
+         // Initialize the app with proper history state
+         function initializeApp() {
+             // Set initial state
+             const initialState = { pageId: 'homePage' };
+             history.replaceState(initialState, '', window.location.href);
+         }
+         
+         // Function to change page with loader and history management
+         function changePage(pageId, addToHistory = true, fromPopState = false) {
+             // Only proceed if this is a valid page ID
+             if (pageIds.includes(pageId)) {
+                 // Hide all pages
+                 pageIds.forEach(id => document.getElementById(id).classList.remove('active'));
+                 
+                 // Show selected page
+                 document.getElementById(pageId).classList.add('active');
+                 
+                 // Show the loader for the selected page
+                 const pageContainer = document.getElementById(pageId);
+                 const loader = pageContainer.querySelector('.page-loader');
+                 if (loader) {
+                     loader.classList.remove('hidden');
+                     // Set timestamp for when the loader was shown
+                     loader.setAttribute('data-shown-time', Date.now());
+                     
+                     // Force hide loader after a short delay (backup solution)
+                     setTimeout(() => {
+                         loader.classList.add('hidden');
+                     }, 2000);
+                 }
+                 
+                 // Refresh iframe src to ensure content loads properly
+                 const iframe = pageContainer.querySelector('iframe');
+                 if (iframe) {
+                     const currentSrc = iframe.src;
+                     iframe.src = "about:blank";
+                     setTimeout(() => {
+                         iframe.src = currentSrc;
+                     }, 50);
+                 }
+                 
+                 // Update nav items
+                 navItems.forEach(nav => nav.classList.remove('active'));
+                 const navId = pageId.replace('Page', 'Nav');
+                 const navElement = document.getElementById(navId);
+                 if (navElement) {
+                     navElement.classList.add('active');
+                 }
+                 
+                 // Handle browser history
+                 if (addToHistory && !fromPopState) {
+                     // Add to navigation stack
+                     if (navigationStack[navigationStack.length - 1] !== pageId) {
+                         navigationStack.push(pageId);
+                     }
+                     
+                     // Add to browser history
+                     const state = { pageId: pageId };
+                     const title = getPageTitle(pageId);
+                     history.pushState(state, title, `#${pageId}`);
+                 } else if (fromPopState) {
+                     // Update navigation stack when coming from popstate
+                     const currentIndex = navigationStack.indexOf(pageId);
+                     if (currentIndex !== -1) {
+                         navigationStack.splice(currentIndex + 1);
+                     }
+                 }
+             }
+         }
+         
+         // Get page title for history
+         function getPageTitle(pageId) {
+             const titles = {
+                 'homePage': 'Home - FundMF',
+                 'portfolioPage': 'Portfolio - FundMF',
+                 'investPage': 'Invest - FundMF',
+                 'accountPage': 'Account - FundMF',
+                 'contactPage': 'Contact - FundMF',
+                 'mandatePage': 'Mandate - FundMF',
+                 'accountTransaction': 'Transactions - FundMF',
+                 'recentOrders': 'Recent Orders - FundMF',
+                 'nfo': 'NFO - FundMF',
+                 'createSip': 'Create SIP - FundMF',
+                 'createSwp': 'Create SWP - FundMF',
+                 'createLumpsum': 'Create Lumpsum - FundMF',
+                 'createStp': 'Create STP - FundMF',
+                 'createMandate': 'Create Mandate - FundMF'
+             };
+             return titles[pageId] || 'FundMF App';
+         }
+         
+         // Handle browser back/forward button
+         window.addEventListener('popstate', function(event) {
+             isHandlingPopState = true;
+             
+             if (event.state && event.state.pageId) {
+                 changePage(event.state.pageId, false, true);
+             } else {
+                 // If no state, go back to home
+                 changePage('homePage', false, true);
+             }
+             
+             setTimeout(() => {
+                 isHandlingPopState = false;
+             }, 100);
+         });
+         
+         // Set up click handlers for nav items
+         navItems.forEach(item => {
+             item.addEventListener('click', function() {
+                 if (isHandlingPopState) return;
+                 
+                 const navId = this.id;
+                 const pageId = navId.replace('Nav', 'Page');
+                 changePage(pageId, true, false);
+             });
+         });
+        
+         // Listen for messages from iframes
+         window.addEventListener('message', function(event) {
+             if (event.data && event.data.action === 'changePage') {
+                 if (isHandlingPopState) return;
+                 changePage(event.data.pageId, true, false);
+             }
+         });
+        
+         // Apply scrollbar hiding to iframes and handle iframe loading
+         document.querySelectorAll('iframe').forEach(iframe => {
+             // Force hide loader when iframe loads or errors
+             function hideLoader() {
+                 const loaderId = iframe.getAttribute('data-loader');
+                 if (loaderId) {
+                     const loader = document.getElementById(loaderId);
+                     if (loader) {
+                         loader.classList.add('hidden');
+                     }
+                 }
+             }
+             
+             // Set events to hide loader
+             iframe.onload = function() {
+                 hideLoader();
+                 
+                 try {
+                     const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+                     
+                     const style = iframeDocument.createElement('style');
+                     style.textContent = `
+                         ::-webkit-scrollbar {
+                             display: none;
+                         }
+                         body {
+                             -ms-overflow-style: none;
+                             scrollbar-width: none;
+                             max-width: 800px;
+                             margin: 0 auto;
+                         }
+                     `;
+                     
+                     iframeDocument.head.appendChild(style);
+                 } catch (e) {
+                     console.log("Cannot access iframe content due to same-origin policy");
+                 }
+             };
+             
+             // Also handle error cases
+             iframe.onerror = hideLoader;
+             
+             // If iframe fails to load within 3 seconds, hide the loader anyway
+             setTimeout(() => {
+                 const loaderId = iframe.getAttribute('data-loader');
+                 if (loaderId) {
+                     const loader = document.getElementById(loaderId);
+                     if (loader && !loader.classList.contains('hidden')) {
+                         loader.classList.add('hidden');
+                     }
+                 }
+             }, 3000);
+         });
+         
+         // Handle all loaders
+         window.addEventListener('DOMContentLoaded', () => {
+             // Initialize the app
+             initializeApp();
+             
+             // Hide all loaders on the initial page after a short delay
+             setTimeout(() => {
+                 document.querySelectorAll('.page-loader').forEach(loader => {
+                     loader.classList.add('hidden');
+                 });
+             }, 800); // Show loader for at least 800ms for better UX
+             
+             // Add global backup solution to hide all loaders after 2.5 seconds
+             // This ensures no loader gets stuck
+             setInterval(() => {
+                 document.querySelectorAll('.page-loader').forEach(loader => {
+                     if (!loader.classList.contains('hidden') && 
+                         !loader.parentElement.classList.contains('active')) {
+                         loader.classList.add('hidden');
+                     }
+                 });
+                 
+                 // For the active page, ensure its loader doesn't stay visible too long
+                 const activePage = document.querySelector('.page-container.active');
+                 if (activePage) {
+                     const activeLoader = activePage.querySelector('.page-loader');
+                     if (activeLoader && !activeLoader.classList.contains('hidden')) {
+                         const loaderShownTime = activeLoader.getAttribute('data-shown-time');
+                         const currentTime = Date.now();
+                         
+                         if (!loaderShownTime) {
+                             activeLoader.setAttribute('data-shown-time', currentTime);
+                         } else if (currentTime - parseInt(loaderShownTime) > 2500) {
+                             activeLoader.classList.add('hidden');
+                         }
+                     }
+                 }
+             }, 500);
+         });
       </script>
    </body>
 </html>
