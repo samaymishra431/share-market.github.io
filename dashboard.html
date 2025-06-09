@@ -76,6 +76,18 @@
          font-size: 18px;
          }
          
+         /* Image icon styles */
+         .nav-icon-img {
+         width: 20px;
+         height: 20px;
+         object-fit: contain;
+         filter: brightness(0) saturate(100%) invert(60%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(60%) contrast(100%);
+         }
+         
+         .nav-item.active .nav-icon-img {
+         filter: brightness(0) saturate(100%) invert(30%) sepia(25%) saturate(1000%) hue-rotate(60deg) brightness(95%) contrast(90%);
+         }
+         
          /* Page Loader Styles */
          .page-loader {
          position: absolute;
@@ -212,13 +224,13 @@
             </div>
             <div class="nav-item" id="portfolioNav">
                <div class="icon-circle">
-                  <i class="far fa-file-alt"></i>
+                  <img src="./assets/images/portfolio.png" alt="Portfolio" class="nav-icon-img">
                </div>
                <div>Portfolio</div>
             </div>
             <div class="nav-item" id="investNav">
                <div class="icon-circle">
-                  <i class="fas fa-chart-line"></i>
+                  <img src="./assets/images/invest.png" alt="Invest" class="nav-icon-img">
                </div>
                <div>Invest</div>
             </div>
