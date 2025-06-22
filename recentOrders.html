@@ -15,115 +15,107 @@
     }
     
     body {
-        background-color: #f8f9fa;
+        background-color: #FFFFFF;
         color: #333;
         max-width: 800px;
         margin: 0 auto;
         position: relative;
+        padding: 0px 5px;
+        padding-bottom: 70px; /* Add space for fixed time-filters */
     }
     
     .header {
-        background-color: #fff;
+        background-color: #FFFFFF;
         color: #333;
         padding: 15px;
         text-align: center;
-        border-bottom: 1px solid #ddd;
         font-weight: bold;
-        font-size: 22px;
+        font-size: 28px;
         margin-bottom: 10px;
+        position: relative;
+    }
+    
+    .header a {
+        position: absolute;
+        left: 15px;
+        top: 15px;
+        color: #d4d4d4;
+        text-decoration: none;
+        font-size: 20px;
     }
     
     .date-filter {
-        background-color: #f1f1f1;
+        background-color: #F0F0F0;
         padding: 20px 12px 12px 12px;
         border-radius: 5px;
         margin: 0 10px 15px 10px;
         position: relative;
         margin-top: 20px;
+        border: 1px solid #DFE1E7;
     }
     
     .date-label {
         font-size: 12px;
-        background-color: #6B8E23;
-        color: white;
-        border-radius: 12px;
-        padding: 3px 10px;
+        background-color: #719000;
+        color: #FFFFFF;
+        border-radius: 50px;
+        padding: 4px 12px;
         position: absolute;
         top: -14px;
         left: 20px;
         z-index: 2;
         margin: 0;
+        font-weight: normal;
+        box-shadow: none;
     }
-    
     .date-range {
         display: flex;
-        gap: 8px;
         align-items: center;
         font-size: 14px;
         width: 100%;
+        font-weight: normal;
+        position: relative;
     }
-    
-    .date-from, .date-to {
+    .date-from {
         display: flex;
         align-items: center;
-        flex: 1;
+        flex: none;
         min-width: 0;
+        gap: 4px;
     }
-    
-    .date-from input,
-    .date-to input {
-        margin-left: 5px;
-        padding: 4px 6px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 13px;
-        width: 100%;
-        min-width: 80px;
+    .date-to {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        right: 0;
+        top: 0;
+        gap: 4px;
     }
-    
-    /* Responsive adjustments for very small screens */
-    @media (max-width: 400px) {
-        .date-range {
-            gap: 4px;
-            font-size: 12px;
-        }
-        
-        .date-from input,
-        .date-to input {
-            font-size: 12px;
-            padding: 3px 4px;
-            min-width: 70px;
-        }
-        
-        .date-filter {
-            padding: 20px 8px 12px 8px;
-        }
+    .date-label-text {
+    color: #818898;
+    font-size: 12px;
+    font-weight: 400;
+}
+    .date-value {
+        color: #34373a;
+        font-weight: 600;
+        font-size: 12px;
+        cursor: pointer;
     }
-    
-    @media (max-width: 320px) {
-        .date-range {
-            gap: 2px;
-            font-size: 11px;
-        }
-        
-        .date-from input,
-        .date-to input {
-            font-size: 11px;
-            padding: 2px 3px;
-            min-width: 60px;
-        }
+    .date-input-hidden {
+        display: none;
     }
     
     .status-filter {
         display: flex;
         justify-content: space-between;
         padding: 5px 15px 15px 15px;
-        font-size: 15px;
-        font-weight: bold;
+        font-size: 16px;
+        font-weight: 600;
     }
     
     .payment-filter {
-        color: #6B8E23;
+        color: #597200;
         display: flex;
         align-items: center;
     }
@@ -134,16 +126,16 @@
     }
     
     .order-item {
-        background-color: white;
-        border-radius: 5px;
-        margin: 0 10px 10px 10px;
+        background-color: #FFFFFF;
+        border-radius: 6px;
+        margin: 0 10px 16px 10px;
         padding: 12px;
-        border: 1px solid #eee;
+        border: 1px solid #DFE1E7;
     }
     
     .order-fund {
-        font-weight: bold;
-        font-size: 16px;
+        font-weight: 600;
+        font-size: 15px;
         margin-bottom: 5px;
     }
     
@@ -155,7 +147,9 @@
     }
     
     .order-amount {
-        color: #666;
+        color: #818898;
+        font-size: 13px;
+        font-weight: 600;
     }
     
     .order-status {
@@ -165,21 +159,21 @@
     }
     
     .status-buy {
-        background-color: #6B8E23;
-        color: white;
-        border-radius: 15px;
+        background-color: #719000;
+        color: #FFFFFF;
+        border-radius: 50px;
         padding: 3px 12px;
-        font-size: 12px;
-        font-weight: bold;
+        font-size: 8px;
+        font-weight: 600;
     }
     
     .status-sell {
-        background-color: #ff6b6b;
-        color: white;
-        border-radius: 15px;
+        background-color: #FC0000;
+        color: #FFFFFF;
+        border-radius: 50px;
         padding: 3px 12px;
-        font-size: 12px;
-        font-weight: bold;
+        font-size: 8px;
+        font-weight: 600;
     }
     
     .status-processing {
@@ -187,46 +181,305 @@
         color: #333;
         border-radius: 15px;
         padding: 3px 12px;
-        font-size: 12px;
-        font-weight: bold;
+        font-size: 8px;
+        font-weight: 600;
     }
     
     .status-completed {
-        background-color: #c8e6c9;
-        color: #333;
+        background-color: #E8F1C8;
+        color: #597200;
         border-radius: 15px;
         padding: 3px 12px;
-        font-size: 12px;
-        font-weight: bold;
+        font-size: 8px;
+        font-weight: 600;
     }
     
     .time-filters {
         display: flex;
-        justify-content: space-around;
-        padding: 15px 10px;
-        border-top: 1px solid #ddd;
-        margin-top: 10px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 0;
+        background: #FAFAFA;
+        border-radius: 6px;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0px;
+        max-width: 400px;
+        width: calc(100% - 32px);
+        margin: 0 auto;
+        z-index: 10; /* Lower than sidebar (sidebar is 1000) */
+        border: 1px solid #DFE1E7;
+        height: 48px;
     }
     
     .time-filter-btn {
         background: none;
         border: none;
-        font-size: 14px;
-        font-weight: bold;
-        color: #333;
-        padding: 5px 15px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #34373a;
+        padding: 0 18px;
+        height: 48px;
+        border-radius: 12px;
+        transition: color 0.2s, background 0.2s;
+        outline: none;
+        box-shadow: none;
+        margin: 0;
+        display: flex;
+        align-items: center;
     }
     
     .time-filter-btn.active {
-        border-bottom: 2px solid #6B8E23;
-        color: #6B8E23;
+        color: #719000;
+        font-weight: bold;
+        background: none;
+        border-bottom: none;
+    }
+    
+    /* Sidebar styles (copied from mandate.html) */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 70%;
+        height: 100%;
+        background-color: #FFFFFF;
+        z-index: 1000;
+        display: none;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+    .sidebar-header {
+        display: flex;
+        align-items: center;
+        padding-right: 30px;
+        padding-left: 30px;
+        padding-top: 24px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid #eee;
+        background-color: #F2F2F2;
+        margin-bottom: 30px;
+    }
+    .sidebar-logo {
+        height: 40px;
+        margin-right: 10px;
+    }
+    .sidebar-menu {
+        display: flex;
+        justify-content: flex-end;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    .sidebar-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-radius: 30px;
+        margin: 5px 15px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    .sidebar-item.active {
+        background-color: #f0f0f0;
+    }
+    .sidebar-icon {
+        margin-right: 15px;
+        color: #666;
+        width: 20px;
+        text-align: center;
+    }
+    .sidebar-text {
+        color: #666;
+    }
+    .show-sidebar {
+        display: block;
+    }
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+    }
+    /* Sidebar child menu styles */
+    .sidebar-child-menu {
+        margin-left: 35px;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-left: 0;
+        display: none;
+    }
+    .sidebar-child-menu.open {
+        display: block;
+    }
+    .sidebar-child-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px 10px 10px;
+        border-radius: 30px;
+        margin: 0 15px 0 0;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        font-size: 15px;
+        color: #666;
+    }
+    .sidebar-child-item.active {
+        background-color: #f0f0f0;
+        color: #000000;
+    }
+    .sidebar-item.active .sidebar-text {
+        color: #000000;
+    }
+    .sidebar-child-icon {
+        margin-right: 12px;
+        color: #9e9e9e;
+        width: 18px;
+        text-align: center;
+        font-size: 15px;
+    }
+    /* Modal styles for logout */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1001;
+        justify-content: center;
+        align-items: center;
+    }
+    .modal-content {
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 350px;
+        padding: 20px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .modal-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .modal-message {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 20px;
+    }
+    .modal-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+    .modal-cancel {
+        background-color: #eee;
+        color: #333;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .modal-confirm {
+        background-color: #597200;
+        color: #FFFFFF;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 15px;
+        font-weight: bold;
+        cursor: pointer;
     }
 </style>
 </head>
 <body>
-
+<!-- Overlay for sidebar background -->
+<div class="overlay"></div>
+<!-- Logout Modal -->
+<div class="modal" id="logoutModal">
+    <div class="modal-content">
+        <div class="modal-title">Confirm Logout</div>
+        <div class="modal-message">Are you sure you want to logout from your FundMF account?</div>
+        <div class="modal-buttons">
+            <button class="modal-cancel">Cancel</button>
+            <button class="modal-confirm">Logout</button>
+        </div>
+    </div>
+</div>
+<!-- Sidebar/Navigation Menu (copied from home.html, with Recent Orders active) -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <img src="./assets/images/logo.png" alt="FundMF Logo" class="sidebar-logo">
+        <div style="flex-grow: 1;"></div>
+        <div class="sidebar-menu">
+            <img src="./assets/images/close.png" alt="Close" style="width:28px;height:28px;cursor:pointer;">
+        </div>
+    </div>
+    <div class="sidebar-item" data-page="homePage">
+        <img src="./assets/images/home.svg" alt="Dashboard Icon" class="sidebar-icon" style="width: 20px; height: 20px;">
+        <div class="sidebar-text">Dashboard</div>
+    </div>
+    <div class="sidebar-item" data-page="portfolioPage">
+        <img src="./assets/images/sideBarPortfolio.png" alt="Portfolio Icon" class="sidebar-icon" style="width: 20px; height: 20px;">
+        <div class="sidebar-text">Portfolio</div>
+    </div>
+    <div class="sidebar-item active" data-page="recentOrders">
+        <img src="./assets/images/recentOrder.png" alt="Recent Orders Icon" class="sidebar-icon" style="width: 20px; height: 20px;">
+        <div class="sidebar-text">Recent Orders</div>
+    </div>
+    <div class="sidebar-item" data-page="mandatePage">
+        <img src="./assets/images/mandate.png" alt="Mandate Icon" class="sidebar-icon" style="width: 20px; height: 20px;">
+        <div class="sidebar-text">Mandate</div>
+    </div>
+    <div class="sidebar-item" id="transactParent" style="cursor:pointer;">
+        <img src="./assets/images/transact.png" alt="Transact Icon" class="sidebar-icon" style="width: 20px; height: 20px;">
+        <div class="sidebar-text">Transact</div>
+        <i class="fas fa-chevron-down" id="transactChevron" style="margin-left:auto;color:#888;font-size:14px;"></i>
+    </div>
+    <div class="sidebar-child-menu" id="transactChildMenu">
+        <div class="sidebar-child-item" data-page="createLumpsum" id="transactLumpsum">
+            <i class="fas fa-handshake sidebar-child-icon"></i>
+            <div>Purchase</div>
+        </div>
+        <div class="sidebar-child-item" data-page="createSip" id="transactSip">
+            <i class="fas fa-chart-bar sidebar-child-icon"></i>
+            <div>SIP</div>
+        </div>
+        <div class="sidebar-child-item" data-page="createStp" id="transactStp">
+            <i class="fas fa-file-alt sidebar-child-icon"></i>
+            <div>STP</div>
+        </div>
+        <div class="sidebar-child-item" data-page="createSwp" id="transactSwp">
+            <i class="fas fa-coins sidebar-child-icon"></i>
+            <div>SWP</div>
+        </div>
+        <div class="sidebar-child-item" data-page="portfolioPage" id="transactRedeem">
+            <i class="fas fa-wallet sidebar-child-icon"></i>
+            <div>Redeem</div>
+        </div>
+    </div>
+    <div class="sidebar-item" data-page="accountPage">
+        <img src="./assets/images/Settings.png" alt="Settings Icon" class="sidebar-icon" style="width: 20px; height: 20px;">
+        <div class="sidebar-text">Settings</div>
+    </div>
+    <div class="sidebar-item" data-page="contactPage">
+        <img src="./assets/images/contactUs.png" alt="Contact Us Icon" class="sidebar-icon" style="width: 20px; height: 20px;">
+        <div class="sidebar-text">Contact Us</div>
+    </div>
+    <div class="sidebar-item" id="logoutItem">
+        <img src="./assets/images/logout.png" alt="Logout Icon" class="sidebar-icon" style="width: 20px; height: 20px;">
+        <div class="sidebar-text">Logout</div>
+    </div>
+</div>
 <!-- Header -->
 <div class="header">
+    <a class="back-button" id="backButton" style="position: absolute; left: 15px; top: 15px; color: #d4d4d4; text-decoration: none; font-size: 20px; cursor:pointer;">
+        <img src="./assets/images/sidebar-menu-active.svg" alt="Back" style="width:28px;height:28px; margin-top: 6px;">
+    </a>
     Recent Orders
 </div>
 
@@ -235,12 +488,14 @@
     <div class="date-label">Date Range</div>
     <div class="date-range">
         <div class="date-from">
-            From:
-            <input type="date" id="date-from">
+            <span class="date-label-text">From:</span>
+            <span class="date-value" id="display-date-from"></span>
+            <input type="date" id="date-from" class="date-input-hidden">
         </div>
         <div class="date-to">
-            To:
-            <input type="date" id="date-to">
+            <span class="date-label-text">To:</span>
+            <span class="date-value" id="display-date-to"></span>
+            <input type="date" id="date-to" class="date-input-hidden">
         </div>
     </div>
 </div>
@@ -249,7 +504,8 @@
 <div class="status-filter">
     <div id="pending-orders-count">Pending orders (0)</div>
     <div class="payment-filter">
-        <i class="fas fa-wallet payment-icon"></i>
+        <!-- Replace FontAwesome icon with your own image -->
+        <img src="./assets/images/payment.png" alt="Payment Icon" class="payment-icon" style="width: 18px; height: 18px; margin-right: 5px;">
         Payment
     </div>
 </div>
@@ -261,12 +517,12 @@
 <div class="time-filters">
     <button class="time-filter-btn">7 days</button>
     <button class="time-filter-btn">30 days</button>
-    <button class="time-filter-btn active">This Month</button>
+    <button class="time-filter-btn">This Month</button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
-    const API_BASE_URL = 'http://122.176.151.191:9090/MutualFund';
+    const API_BASE_URL = 'http://122.176.151.191/MutualFund';
     let orders = [];
     let allOrders = [];
 
@@ -382,6 +638,25 @@
         }
     }
 
+    // Helper to format date as '21st Apr 2025'
+    function formatDisplayDate(iso) {
+        if (!iso) return '';
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const [yyyy, mm, dd] = iso.split('-');
+        const day = parseInt(dd, 10);
+        let suffix = 'th';
+        if (day % 10 === 1 && day !== 11) suffix = 'st';
+        else if (day % 10 === 2 && day !== 12) suffix = 'nd';
+        else if (day % 10 === 3 && day !== 13) suffix = 'rd';
+        return `${day}${suffix} ${months[parseInt(mm,10)-1]} ${yyyy}`;
+    }
+
+    // Update display dates
+    function updateDisplayDates() {
+        document.getElementById('display-date-from').textContent = formatDisplayDate(document.getElementById('date-from').value);
+        document.getElementById('display-date-to').textContent = formatDisplayDate(document.getElementById('date-to').value);
+    }
+
     // Set up date pickers based on orders
     function setupDateFilters() {
         if (!orders.length) return;
@@ -396,8 +671,9 @@
         dateFrom.max = maxDate;
         dateTo.min = minDate;
         dateTo.max = maxDate;
-        dateFrom.addEventListener('change', filterByDate);
-        dateTo.addEventListener('change', filterByDate);
+        updateDisplayDates();
+        // Remove active class from all time filter buttons on load
+        document.querySelectorAll('.time-filter-btn').forEach(btn => btn.classList.remove('active'));
     }
 
     // Time filter functionality (optional: implement if needed)
@@ -433,13 +709,201 @@
             if (fromDate && toDate) {
                 dateFrom.value = fmt(fromDate);
                 dateTo.value = fmt(toDate);
+                updateDisplayDates(); // <-- update display after changing values
                 filterByDate();
             }
         });
     });
 
-    // On page load, fetch orders
-    window.addEventListener('DOMContentLoaded', fetchOrders);
+    // Sidebar functionality (from home.html)
+    const menuIcon = document.getElementById('backButton').querySelector('img');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarClose = document.querySelector('.sidebar-menu');
+    const overlay = document.querySelector('.overlay');
+    const logoutItem = document.getElementById('logoutItem');
+    const logoutModal = document.getElementById('logoutModal');
+    const modalCancel = document.querySelector('.modal-cancel');
+    const modalConfirm = document.querySelector('.modal-confirm');
+
+    // Open sidebar
+    menuIcon.addEventListener('click', function(e) {
+        e.preventDefault();
+        sidebar.classList.add('show-sidebar');
+        overlay.style.display = 'block';
+    });
+
+    // Close sidebar
+    sidebarClose.addEventListener('click', function() {
+        sidebar.classList.remove('show-sidebar');
+        overlay.style.display = 'none';
+    });
+
+    // Close sidebar when clicking outside
+    overlay.addEventListener('click', function() {
+        sidebar.classList.remove('show-sidebar');
+        overlay.style.display = 'none';
+    });
+
+    // Show logout confirmation modal
+    logoutItem.addEventListener('click', function() {
+        sidebar.classList.remove('show-sidebar');
+        overlay.style.display = 'none';
+        logoutModal.style.display = 'flex';
+    });
+
+    // Cancel logout
+    modalCancel.addEventListener('click', function() {
+        logoutModal.style.display = 'none';
+    });
+
+    // Confirm logout and redirect
+    modalConfirm.addEventListener('click', function() {
+        window.top.location.href = 'index.html';
+    });
+
+    // Close modal when clicking outside
+    logoutModal.addEventListener('click', function(event) {
+        if (event.target === logoutModal) {
+            logoutModal.style.display = 'none';
+        }
+    });
+
+    // Update the sidebar item click handler
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+        // Skip Transact parent and Logout
+        if (item.id !== 'logoutItem' && item.id !== 'transactParent') {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.sidebar-item').forEach(sideItem => {
+                    sideItem.classList.remove('active');
+                });
+                document.querySelectorAll('.sidebar-child-item').forEach(child => {
+                    child.classList.remove('active');
+                });
+                this.classList.add('active');
+                const pageId = this.getAttribute('data-page');
+                if (pageId) {
+                    sidebar.classList.remove('show-sidebar');
+                    overlay.style.display = 'none';
+                    if (window.parent && window.parent.postMessage) {
+                        window.parent.postMessage({
+                            action: 'changePage',
+                            pageId: pageId
+                        }, '*');
+                    }
+                    showInFrameLoader();
+                } else {
+                    sidebar.classList.remove('show-sidebar');
+                    overlay.style.display = 'none';
+                }
+            });
+        }
+    });
+
+    // Transact child menu toggle
+    const transactParent = document.getElementById('transactParent');
+    const transactChildMenu = document.getElementById('transactChildMenu');
+    const transactChevron = document.getElementById('transactChevron');
+    let transactMenuOpen = false;
+
+    transactParent.addEventListener('click', function(e) {
+        transactMenuOpen = !transactMenuOpen;
+        if (transactMenuOpen) {
+            transactChildMenu.classList.add('open');
+            transactChevron.classList.remove('fa-chevron-down');
+            transactChevron.classList.add('fa-chevron-up');
+        } else {
+            transactChildMenu.classList.remove('open');
+            transactChevron.classList.remove('fa-chevron-up');
+            transactChevron.classList.add('fa-chevron-down');
+        }
+        e.stopPropagation();
+    });
+
+    // Add click event listeners for all sidebar child items (Transact)
+    document.querySelectorAll('.sidebar-child-item').forEach(child => {
+        child.addEventListener('click', function(e) {
+            document.querySelectorAll('.sidebar-item').forEach(sideItem => {
+                sideItem.classList.remove('active');
+            });
+            document.querySelectorAll('.sidebar-child-item').forEach(childItem => {
+                childItem.classList.remove('active');
+            });
+            this.classList.add('active');
+            const pageId = this.getAttribute('data-page');
+            sidebar.classList.remove('show-sidebar');
+            overlay.style.display = 'none';
+            if (window.parent && window.parent.postMessage) {
+                window.parent.postMessage({
+                    action: 'changePage',
+                    pageId: pageId
+                }, '*');
+            }
+            showInFrameLoader();
+            e.stopPropagation();
+        });
+    });
+
+    // Function to show a loader inside the iframe
+    function showInFrameLoader() {
+        if (!document.getElementById('inFrameLoader')) {
+            const loaderDiv = document.createElement('div');
+            loaderDiv.id = 'inFrameLoader';
+            loaderDiv.style.position = 'fixed';
+            loaderDiv.style.top = '0';
+            loaderDiv.style.left = '0';
+            loaderDiv.style.width = '100%';
+            loaderDiv.style.height = '100%';
+            loaderDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+            loaderDiv.style.display = 'flex';
+            loaderDiv.style.justifyContent = 'center';
+            loaderDiv.style.alignItems = 'center';
+            loaderDiv.style.zIndex = '10000';
+            const spinner = document.createElement('div');
+            spinner.style.width = '50px';
+            spinner.style.height = '50px';
+            spinner.style.border = '5px solid #e2ebc7';
+            spinner.style.borderRadius = '50%';
+            spinner.style.borderTopColor = '#597200';
+            spinner.style.animation = 'spin 1s linear infinite';
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            `;
+            document.head.appendChild(style);
+            loaderDiv.appendChild(spinner);
+            document.body.appendChild(loaderDiv);
+        } else {
+            document.getElementById('inFrameLoader').style.display = 'flex';
+        }
+    }
+
+    // Initial fetch
+    fetchOrders();
+
+    // --- Date Picker Click-to-Open and Change Handling ---
+    // Show date input when clicking on display date
+    document.addEventListener('DOMContentLoaded', function() {
+        // FROM
+        document.getElementById('display-date-from').addEventListener('click', function() {
+            document.getElementById('date-from').showPicker ? document.getElementById('date-from').showPicker() : document.getElementById('date-from').focus();
+        });
+        // TO
+        document.getElementById('display-date-to').addEventListener('click', function() {
+            document.getElementById('date-to').showPicker ? document.getElementById('date-to').showPicker() : document.getElementById('date-to').focus();
+        });
+        // Update display and filter on change
+        document.getElementById('date-from').addEventListener('change', function() {
+            updateDisplayDates();
+            filterByDate();
+        });
+        document.getElementById('date-to').addEventListener('change', function() {
+            updateDisplayDates();
+            filterByDate();
+        });
+    });
 </script>
 </body>
 </html>
